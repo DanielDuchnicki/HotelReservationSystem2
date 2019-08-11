@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace HotelReservation.Hotel
 {
     public class Hotel
     {
         public int HotelId { get; }
-        public string HotelName { get; }
-        public double Price { get; }
-        public List<IConvertible> ReservationSteps { get; }
+        public List<ReservationSteps.ReservationSteps> ReservationSteps { get; }
 
-        public Hotel(int hotelId, string hotelName, double price,
-            List<IConvertible> reservationSteps)
+        public Hotel(int hotelId, List<ReservationSteps.ReservationSteps> reservationSteps)
         {
             HotelId = hotelId;
-            HotelName = hotelName;
-            Price = price;
             ReservationSteps = reservationSteps;
         }
     }

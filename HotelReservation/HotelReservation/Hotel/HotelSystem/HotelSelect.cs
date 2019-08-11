@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace HotelReservation.Hotel.HotelSystemReservationSteps
+namespace HotelReservation.Hotel.HotelSystem
 {
-    public class SelectingHotelProcess : IHotelSystemReservationStep
+    public class HotelSelect
     {
-        public int Execute(HotelSystem hotelSystem)
+        public int SelectHotel(HotelSystem hotelSystem)
         {
             Console.WriteLine("Please check list of hotels and choose one for you!");
             Console.WriteLine("Please provide hotel ID: ");
             var selectedHotelId = Console.ReadLine();
-            var hotelId = Convert.ToInt32(selectedHotelId);
+            var parsedHotelId = 0;
             Console.WriteLine();
-            return hotelId;
+            return !int.TryParse(selectedHotelId, out parsedHotelId) ? 0 : parsedHotelId;
         }
     }
 }

@@ -43,35 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hotel\HotelData\HiltonHotelData.cs" />
     <Compile Include="Hotel\Hotel.cs" />
-    <Compile Include="Hotel\HotelData\HotelData.cs" />
-    <Compile Include="Hotel\HotelReservationSteps.cs" />
-    <Compile Include="Hotel\HotelSystem.cs" />
-    <Compile Include="Mail\IMailSystemReservationStep.cs" />
-    <Compile Include="Mail\MailReservationSteps.cs" />
-    <Compile Include="Mail\MailSystemReservationStepCreator.cs" />
-    <Compile Include="Mail\MailSystemReservationStepsFactory.cs" />
-    <Compile Include="Payment\IPaymentSystemReservationStep.cs" />
-    <Compile Include="Payment\PaymentReservationSteps.cs" />
-    <Compile Include="Payment\PaymentSystemReservationStepCreator.cs" />
-    <Compile Include="Payment\PaymentSystemReservationStepsFactory.cs" />
-    <Compile Include="Hotel\HotelData\MercureHotelData.cs" />
-    <Compile Include="IManagementSystem.cs" />
-    <Compile Include="Payment\PaymentProcessFactory.cs" />
-    <Compile Include="Payment\PaymentProcess.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\HotelsDisplayProcessFactory.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\HotelsDisplayProcess.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\IHotelSystemReservationStep.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\HotelSystemReservationStepCreator.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\HotelSystemReservationStepsFactory.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\SelectingHotelProcessFactory.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\SelectingHotelProcess.cs" />
-    <Compile Include="Mail\SendingMailProcessFactory.cs" />
-    <Compile Include="Mail\SendingMailProcess.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\HotelSystemReservationProcessFactory.cs" />
-    <Compile Include="Hotel\HotelSystemReservationSteps\ReservationStartProcess.cs" />
-    <Compile Include="StepExecutor.cs" />
+    <Compile Include="Hotel\HotelSystem\HotelSystem.cs" />
+    <Compile Include="ReservationSteps\IReservationStep.cs" />
+    <Compile Include="ReservationSteps\Payment\PaymentProcess.cs" />
+    <Compile Include="Hotel\HotelSystem\HotelsDisplay.cs" />
+    <Compile Include="Hotel\HotelSystem\HotelSelect.cs" />
+    <Compile Include="ReservationSteps\Mail\SendingMailProcess.cs" />
+    <Compile Include="ReservationSteps\Hotel\ReservationStartProcess.cs" />
+    <Compile Include="ReservationSteps\ReservationSteps.cs" />
+    <Compile Include="ReservationSteps\StepsExecutor.cs" />
     <Compile Include="SystemMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

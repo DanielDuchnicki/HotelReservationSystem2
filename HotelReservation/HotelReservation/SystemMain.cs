@@ -1,12 +1,10 @@
 ﻿using System;
-using HotelReservation.Hotel;
-using HotelReservation.Hotel.HotelData;
-using HotelReservation.Mail;
-using HotelReservation.Payment;
+using HotelReservation.Hotel.HotelSystem;
+using HotelReservation.ReservationSteps;
 
 namespace HotelReservation
 {
-    class SystemMain
+    public class SystemMain
     {
         public static void DisplayMenu()
         {
@@ -19,7 +17,7 @@ namespace HotelReservation
             Console.WriteLine("Choose, what you want to do:");
         }
 
-        public static int Menu(HotelSystem hotelSystem, StepExecutor stepExecutor)
+        public static int Menu(HotelSystem hotelSystem, StepsExecutor stepsExecutor)
         {
             DisplayMenu();
             var choice = Console.ReadLine();
@@ -30,39 +28,33 @@ namespace HotelReservation
                     break;
                 case "1":
                     Console.Clear();
-                    stepExecutor.ExecuteStep(HotelReservationSteps.HotelsDisplayProcess);
-                    var hotelId = stepExecutor.ExecuteStep(HotelReservationSteps.SelectingHotelProcess);
-                    var selectedHotel = hotelSystem.Hotels.Find(hotel => hotel.HotelId == hotelId);
-                    foreach (IConvertible reservationStep in selectedHotel.ReservationSteps)
-                    {
-                        stepExecutor.ExecuteStep(reservationStep);
-                    }
-                    Console.ReadKey();
+                    new HotelsDisplay().DisplayHotels(hotelSystem);
+                    var hotelId = new HotelSelect().SelectHotel(hotelSystem);
+                    Console.Clear();
+                    if (hotelId >= 1000)
+                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId));
+                    else
+                        Console.WriteLine("You provided incorrect hotel ID. Please try again.");
                     break;
                 default:
                     Console.Clear();
                     Console.WriteLine("Choose correct option!");
-                    break;
+                    return -1;
             }
             return Convert.ToInt32(choice);
         }
 
-        static void Main()
+        public static void Main()
         {
             var hotelSystem = new HotelSystem();
-            var paymentSystemReservationStepCreator = new PaymentSystemReservationStepCreator();
-            var mailSystemReservationStepCreator = new MailSystemReservationStepCreator();
-
-            hotelSystem.AddConfiguredHotel(new MercureHotelData());
-            hotelSystem.AddConfiguredHotel(new HiltonHotelData());
-
-            var stepExecutor = new StepExecutor(hotelSystem, paymentSystemReservationStepCreator, mailSystemReservationStepCreator);
+            hotelSystem.Init();
+            var stepsExecutor = new StepsExecutor();
 
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
             int choice;
             do
             {
-                choice = Menu(hotelSystem, stepExecutor);
+                choice = Menu(hotelSystem, stepsExecutor);
             } while (choice != 0);
         }
     }

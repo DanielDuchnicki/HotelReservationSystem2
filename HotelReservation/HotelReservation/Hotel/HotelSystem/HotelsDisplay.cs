@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace HotelReservation.Hotel.HotelSystemReservationSteps
+namespace HotelReservation.Hotel.HotelSystem
 {
-    public class HotelsDisplayProcess : IHotelSystemReservationStep
+    public class HotelsDisplay
     {
-        public int Execute(HotelSystem hotelSystem)
+        public void DisplayHotels(HotelSystem hotelSystem)
         {
             if (hotelSystem.Hotels.Count == 0)
                 Console.WriteLine("There are no hotels added to the reservation system.");
@@ -13,13 +13,10 @@ namespace HotelReservation.Hotel.HotelSystemReservationSteps
                 Console.WriteLine("[Hotel ID, Name, Price (for each day), Is free?]");
                 foreach (var hotel in hotelSystem.Hotels)
                 {
-                    Console.WriteLine(hotel.HotelId + ",  " +
-                                      hotel.HotelName + ",  " +
-                                      hotel.Price);
+                    Console.WriteLine("Hotel ID: " + hotel.HotelId);
                 }
             }
             Console.WriteLine();
-            return 0;
         }
     }
 }
