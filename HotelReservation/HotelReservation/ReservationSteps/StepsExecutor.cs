@@ -7,19 +7,19 @@ namespace HotelReservation.ReservationSteps
 {
     public class StepsExecutor
     {
-        private readonly Dictionary<ReservationSteps, IReservationStep> _reservationStepsInstances;
+        private readonly Dictionary<ReservationStepType, IReservationStep> _reservationStepsInstances;
 
         public StepsExecutor()
         {
-            _reservationStepsInstances = new Dictionary<ReservationSteps, IReservationStep>
+            _reservationStepsInstances = new Dictionary<ReservationStepType, IReservationStep>
                 {
-                    {ReservationSteps.ReservationProcess, new ReservationStartProcess() },
-                    {ReservationSteps.SendingMailProcess, new SendingMailProcess() },
-                    {ReservationSteps.PaymentProcess, new PaymentProcess() }
+                    {ReservationStepType.ReservationProcess, new ReservationStartProcess() },
+                    {ReservationStepType.SendingMailProcess, new SendingMailProcess() },
+                    {ReservationStepType.PaymentProcess, new PaymentProcess() }
                 };
         }
 
-        public void ExecuteSteps(List<ReservationSteps> reservationSteps)
+        public void ExecuteSteps(List<ReservationStepType> reservationSteps)
         {
             foreach (var reservationStep in reservationSteps)
             {

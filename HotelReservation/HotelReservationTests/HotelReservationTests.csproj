@@ -64,8 +64,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Hotel\HotelTests.cs" />
-    <Compile Include="Hotel\HotelSystem\HotelSystemTests.cs" />
+    <Compile Include="Hotels\HotelTests.cs" />
+    <Compile Include="Hotels\HotelSystemTests.cs" />
+    <Compile Include="Hotels\SystemInitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +78,7 @@
       <Name>HotelReservation</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
