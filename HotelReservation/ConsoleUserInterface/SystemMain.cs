@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
 using HotelReservation.ReservationSteps;
 
@@ -18,13 +18,13 @@ namespace ConsoleUserInterface
             Console.WriteLine("Choose, what you want to do:");
         }
 
-        public static void DisplayHotels(List<Hotel> hotels)
+        public static void DisplayHotels(ReadOnlyCollection<Hotel> hotels)
         {
             if (hotels.Count == 0)
                 Console.WriteLine("There are no hotels added to the reservation system.");
             else
             {
-                Console.WriteLine("[Hotel ID, Name, Price (for each day), Is free?]");
+                Console.WriteLine("[Hotel ID]");
                 foreach (var hotel in hotels)
                 {
                     Console.WriteLine("Hotel ID: " + hotel.HotelId);
@@ -57,10 +57,14 @@ namespace ConsoleUserInterface
                     DisplayHotels(hotels);
                     var hotelId = SelectHotel();
                     Console.Clear();
-                    if (hotelId >= 1000 & hotelId < hotelSystem.LastHotelId)
+                    try
+                    {
                         stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId));
-                    else
-                        Console.WriteLine("You provided incorrect hotel ID. Please try again.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                     break;
                 default:
                     Console.Clear();

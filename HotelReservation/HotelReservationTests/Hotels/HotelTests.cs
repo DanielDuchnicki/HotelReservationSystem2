@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using HotelReservation.ReservationSteps;
 using HotelReservation.Hotels;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace HotelReservationTests.Hotels
 {

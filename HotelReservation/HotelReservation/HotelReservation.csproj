@@ -54,6 +54,7 @@
     <Compile Include="ReservationSteps\Mail\SendingMailProcess.cs" />
     <Compile Include="ReservationSteps\Hotel\ReservationStartProcess.cs" />
     <Compile Include="ReservationSteps\ReservationStepType.cs" />
+    <Compile Include="ReservationSteps\StepFactory.cs" />
     <Compile Include="ReservationSteps\StepsExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

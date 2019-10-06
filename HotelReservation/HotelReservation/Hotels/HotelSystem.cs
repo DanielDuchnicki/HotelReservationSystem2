@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using HotelReservation.ReservationSteps;
 
 namespace HotelReservation.Hotels
@@ -6,24 +8,30 @@ namespace HotelReservation.Hotels
     public class HotelSystem
     {
         private readonly List<Hotel> _hotels = new List<Hotel>();
-        public int LastHotelId { get; private set; } = 1000;
+        public int LastHotelId { get; private set; }
 
         public void AddNewHotel(List<ReservationStepType> hotelReservationSteps)
         {
-            var hotelId = LastHotelId;
+            var hotelId = ++LastHotelId;
             var newHotel = new Hotel(hotelId, hotelReservationSteps);
             _hotels.Add(newHotel);
-            LastHotelId++;
         }
 
-        public List<Hotel> GetHotels()
+        public ReadOnlyCollection<Hotel> GetHotels()
         {
-            return _hotels;
+            return new ReadOnlyCollection<Hotel>(_hotels);
         }
 
         public List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
-            return _hotels.Find(hotel => hotel.HotelId == hotelId).ReservationSteps;
+            try
+            {
+                return _hotels.Find(hotel => hotel.HotelId == hotelId).ReservationSteps;
+            }
+            catch(NullReferenceException ex)
+            {
+                throw new ArgumentException("You provided incorrect hotel ID. Please try again.", ex);
+            }
         }
     }
 }

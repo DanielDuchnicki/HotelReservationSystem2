@@ -1,6 +1,6 @@
 ﻿using HotelReservation.Hotels;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace HotelReservationTests.Hotels
 {

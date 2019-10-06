@@ -4,6 +4,7 @@
     {
         ReservationProcess,
         SendingMailProcess,
-        PaymentProcess
+        PaymentProcess,
+        TestStep
     }
 }

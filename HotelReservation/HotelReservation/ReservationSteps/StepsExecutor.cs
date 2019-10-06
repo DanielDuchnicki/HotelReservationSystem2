@@ -1,29 +1,23 @@
-﻿using System.Collections.Generic;
-using HotelReservation.ReservationSteps.Hotel;
-using HotelReservation.ReservationSteps.Mail;
-using HotelReservation.ReservationSteps.Payment;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HotelReservation.ReservationSteps
 {
     public class StepsExecutor
     {
-        private readonly Dictionary<ReservationStepType, IReservationStep> _reservationStepsInstances;
-
-        public StepsExecutor()
-        {
-            _reservationStepsInstances = new Dictionary<ReservationStepType, IReservationStep>
-                {
-                    {ReservationStepType.ReservationProcess, new ReservationStartProcess() },
-                    {ReservationStepType.SendingMailProcess, new SendingMailProcess() },
-                    {ReservationStepType.PaymentProcess, new PaymentProcess() }
-                };
-        }
-
         public void ExecuteSteps(List<ReservationStepType> reservationSteps)
         {
+            StepFactory reservationStepFactory = new StepFactory();
             foreach (var reservationStep in reservationSteps)
             {
-                _reservationStepsInstances[reservationStep].Execute();
+                try
+                {
+                    reservationStepFactory.CreateInstance(reservationStep).Execute();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Something went wrong. Probably, you cannot access one of reservation steps. Please try again.", ex);
+                }
             }
         }
     }
