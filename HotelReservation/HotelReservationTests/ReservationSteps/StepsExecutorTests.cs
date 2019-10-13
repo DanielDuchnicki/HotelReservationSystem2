@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HotelReservation.ReservationSteps;
 using FluentAssertions;
 using NUnit.Framework;
+using Moq;
 
 namespace HotelReservationTests.ReservationSteps
 {
@@ -26,7 +27,7 @@ namespace HotelReservationTests.ReservationSteps
                 ReservationStepType.PaymentProcess,
                 ReservationStepType.SendingMailProcess,
             };
-            Action act = () => _subject.ExecuteSteps(_reservationSteps);
+            Action act = () => _subject.ExecuteSteps(_reservationSteps, new StepFactory());
             act.Should().NotThrow<Exception>();
         }
 
@@ -35,10 +36,10 @@ namespace HotelReservationTests.ReservationSteps
         {
             var _reservationSteps = new List<ReservationStepType>()
             {
-                ReservationStepType.TestStep
+                (ReservationStepType)(-1)
             };
-            Action act = () => _subject.ExecuteSteps(_reservationSteps);
-            act.Should().Throw<Exception>().WithMessage("Something went wrong. Probably, you cannot access one of reservation steps. Please try again.");
+            Action act = () => _subject.ExecuteSteps(_reservationSteps, new StepFactory());
+            act.Should().Throw<Exception>();
         }
     }
 }

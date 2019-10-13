@@ -8,12 +8,12 @@ namespace HotelReservation.Hotels
     public class HotelSystem
     {
         private readonly List<Hotel> _hotels = new List<Hotel>();
-        public int LastHotelId { get; private set; }
+        public int? LastHotelId { get; private set; } = null;
 
         public void AddNewHotel(List<ReservationStepType> hotelReservationSteps)
         {
-            var hotelId = ++LastHotelId;
-            var newHotel = new Hotel(hotelId, hotelReservationSteps);
+            LastHotelId = (LastHotelId == null) ? 1 : ++LastHotelId;
+            var newHotel = new Hotel(LastHotelId, hotelReservationSteps);
             _hotels.Add(newHotel);
         }
 

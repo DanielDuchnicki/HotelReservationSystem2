@@ -82,7 +82,7 @@ namespace HotelReservationTests.Hotels
         [Test]
         public void ShouldLastHotelIdBe0WhenNoHotelsAdded()
         {
-            _subject.LastHotelId.Should().Be(0);
+            _subject.LastHotelId.Should().Be(null);
         }
     }
 }

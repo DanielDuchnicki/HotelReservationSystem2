@@ -59,7 +59,7 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId));
+                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId), new StepFactory());
                     }
                     catch (Exception ex)
                     {
