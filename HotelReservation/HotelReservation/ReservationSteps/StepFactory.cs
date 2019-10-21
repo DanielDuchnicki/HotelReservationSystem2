@@ -8,26 +8,26 @@ namespace HotelReservation.ReservationSteps
 {
     public class StepFactory
     {
-        private readonly Dictionary<ReservationStepType, Type> _reservationStepsInstances;
+        private readonly Dictionary<ReservationStepType, Func<IReservationStep>> _reservationStepsInstances;
         public StepFactory()
         {
             
-            _reservationStepsInstances = new Dictionary<ReservationStepType, Type>
+            _reservationStepsInstances = new Dictionary<ReservationStepType, Func<IReservationStep>>
                 {
-                    {ReservationStepType.ReservationProcess, typeof(ReservationStartProcess)},
-                    {ReservationStepType.SendingMailProcess, typeof(SendingMailProcess)},
-                    {ReservationStepType.PaymentProcess, typeof(PaymentProcess)}
+                    {ReservationStepType.ReservationProcess, (() => new ReservationStartProcess())},
+                    {ReservationStepType.SendingMailProcess, (() => new SendingMailProcess())},
+                    {ReservationStepType.PaymentProcess, (() => new PaymentProcess())}
                 };
         }
 
-        public IReservationStep CreateInstance(ReservationStepType reservationStep)
+        public virtual IReservationStep CreateInstance(ReservationStepType reservationStep)
         {
-            Type instance;
+            Func<IReservationStep> instance;
             if (!_reservationStepsInstances.TryGetValue(reservationStep, out instance))
             {
                 throw new NotImplementedException("There is no implementation of IReservationStep interface for given Reservation Step Type");
             }
-            return (IReservationStep)Activator.CreateInstance(instance);
+            return instance.Invoke();
         }
     }
 }

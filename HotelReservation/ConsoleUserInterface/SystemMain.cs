@@ -59,7 +59,7 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId), new StepFactory());
+                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId));
                     }
                     catch (Exception ex)
                     {
@@ -78,7 +78,7 @@ namespace ConsoleUserInterface
         {
             var hotelSystem = new HotelSystem();
             new SystemInit().AddHotels(hotelSystem);
-            var stepsExecutor = new StepsExecutor();
+            var stepsExecutor = new StepsExecutor(new StepFactory());
 
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
             int choice;
