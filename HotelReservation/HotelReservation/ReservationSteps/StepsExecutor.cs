@@ -1,31 +1,22 @@
 ﻿using System.Collections.Generic;
-using HotelReservation.ReservationSteps.Hotel;
-using HotelReservation.ReservationSteps.Mail;
-using HotelReservation.ReservationSteps.Payment;
+using System.Linq;
 
 namespace HotelReservation.ReservationSteps
 {
     public class StepsExecutor
     {
-        private readonly Dictionary<ReservationSteps, IReservationStep> _reservationStepsInstances;
-
-        public StepsExecutor()
+        private readonly StepFactory _stepFactory;
+        public StepsExecutor(StepFactory stepFactory)
         {
-            _reservationStepsInstances = new Dictionary<ReservationSteps, IReservationStep>
-                {
-                    {ReservationSteps.ReservationProcess, new ReservationStartProcess() },
-                    {ReservationSteps.SendingMailProcess, new SendingMailProcess() },
-                    {ReservationSteps.PaymentProcess, new PaymentProcess() }
-                };
+            _stepFactory = stepFactory;
         }
 
-        public void ExecuteSteps(List<ReservationSteps> reservationSteps)
+        public void ExecuteSteps(List<ReservationStepType> reservationSteps)
         {
             foreach (var reservationStep in reservationSteps)
-            {
-                _reservationStepsInstances[reservationStep].Execute();
-            }
+                _stepFactory.CreateInstance(reservationStep).Execute();
         }
-    }
-}
 
+    }
+
+}
