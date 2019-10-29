@@ -71,6 +71,9 @@
   <ItemGroup>
     <Compile Include="Hotels\HotelTests.cs" />
     <Compile Include="Hotels\HotelSystemTests.cs" />
+    <Compile Include="Hotels\Reservation\ReservationStartProcessDataTests.cs" />
+    <Compile Include="Hotels\Mail\SendingMailProcessDataTests.cs" />
+    <Compile Include="Hotels\Payment\PaymentProcessDataTests.cs" />
     <Compile Include="Hotels\SystemInitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReservationSteps\StepFactoryTests.cs" />
@@ -87,6 +90,7 @@
       <Name>HotelReservation</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

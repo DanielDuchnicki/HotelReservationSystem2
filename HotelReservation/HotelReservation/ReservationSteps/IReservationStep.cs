@@ -2,6 +2,6 @@
 {
     public interface IReservationStep
     {
-        void Execute();
+        void Execute(IStepData stepData);
     }
 }

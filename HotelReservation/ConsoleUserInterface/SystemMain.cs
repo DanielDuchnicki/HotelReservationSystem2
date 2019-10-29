@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
 using HotelReservation.ReservationSteps;
+using HotelReservation.ReservationSteps.Mail;
+using HotelReservation.ReservationSteps.Payment;
+using HotelReservation.ReservationSteps.Reservation;
 
 namespace ConsoleUserInterface
 {
@@ -59,7 +63,12 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId));
+                        var stepsList = hotelSystem.GetHotelReservationSteps(hotelId);
+                        Console.WriteLine("Please provide your e-mail address: ");
+                        var mail = Console.ReadLine();
+                        var price = 125.25;
+                        stepsExecutor.ExecuteSteps(stepsList, 
+                            new List<IStepData> { new SendingMailProcessData(mail), new PaymentProcessData(price), new ReservationStartProcessData(hotelId) });
                     }
                     catch (Exception ex)
                     {
