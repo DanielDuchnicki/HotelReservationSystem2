@@ -46,13 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsolePrinter.cs" />
     <Compile Include="Hotels\Hotel.cs" />
     <Compile Include="Hotels\HotelSystem.cs" />
     <Compile Include="Hotels\SystemInit.cs" />
     <Compile Include="ReservationSteps\IReservationStep.cs" />
+    <Compile Include="ReservationSteps\StepInput.cs" />
     <Compile Include="ReservationSteps\Payment\PaymentProcess.cs" />
     <Compile Include="ReservationSteps\Mail\SendingMailProcess.cs" />
-    <Compile Include="ReservationSteps\Hotel\ReservationStartProcess.cs" />
+    <Compile Include="ReservationSteps\Reservation\ReservationStartProcess.cs" />
     <Compile Include="ReservationSteps\ReservationStepType.cs" />
     <Compile Include="ReservationSteps\StepFactory.cs" />
     <Compile Include="ReservationSteps\StepsExecutor.cs" />

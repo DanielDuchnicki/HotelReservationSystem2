@@ -1,12 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace HotelReservation.ReservationSteps.Payment
 {
     public class PaymentProcess : IReservationStep
     {
-        public void Execute()
+        public void Execute(ConsolePrinter consolePrinter, List<StepInput> stepData)
         {
-            Console.WriteLine("----==== PAYMENT PROCESS ====----");
+            new ConsolePrinter().Execute("----==== PAYMENT PROCESS ====----");
         }
     }
 }

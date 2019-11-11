@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace HotelReservation.ReservationSteps
 {
@@ -11,10 +10,10 @@ namespace HotelReservation.ReservationSteps
             _stepFactory = stepFactory;
         }
 
-        public void ExecuteSteps(List<ReservationStepType> reservationSteps)
+        public void ExecuteSteps(List<ReservationStepType> reservationSteps, ConsolePrinter consolePrinter, List<StepInput> stepsData)
         {
             foreach (var reservationStep in reservationSteps)
-                _stepFactory.CreateInstance(reservationStep).Execute();
+                _stepFactory.CreateInstance(reservationStep).Execute(consolePrinter, stepsData);
         }
 
     }

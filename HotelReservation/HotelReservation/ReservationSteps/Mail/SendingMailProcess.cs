@@ -1,12 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace HotelReservation.ReservationSteps.Mail
 {
     public class SendingMailProcess : IReservationStep
     {
-        public void Execute()
+        public void Execute(ConsolePrinter consolePrinter, List<StepInput> stepData)
         {
-            Console.WriteLine("----==== SENDING MAIL PROCESS ====----");
+            new ConsolePrinter().Execute("----==== SENDING MAIL PROCESS ====----");
         }
     }
 }

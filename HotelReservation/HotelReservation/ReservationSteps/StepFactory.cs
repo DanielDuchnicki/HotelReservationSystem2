@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using HotelReservation.ReservationSteps.Hotel;
+using HotelReservation.ReservationSteps.Reservation;
 using HotelReservation.ReservationSteps.Mail;
 using HotelReservation.ReservationSteps.Payment;
 
@@ -14,9 +14,9 @@ namespace HotelReservation.ReservationSteps
             
             _reservationStepsInstances = new Dictionary<ReservationStepType, Func<IReservationStep>>
                 {
-                    {ReservationStepType.ReservationProcess, (() => new ReservationStartProcess())},
-                    {ReservationStepType.SendingMailProcess, (() => new SendingMailProcess())},
-                    {ReservationStepType.PaymentProcess, (() => new PaymentProcess())}
+                    {ReservationStepType.ReservationProcess, () => new ReservationStartProcess()},
+                    {ReservationStepType.SendingMailProcess, () => new SendingMailProcess()},
+                    {ReservationStepType.PaymentProcess, () => new PaymentProcess()}
                 };
         }
 
@@ -27,7 +27,7 @@ namespace HotelReservation.ReservationSteps
             {
                 throw new NotImplementedException("There is no implementation of IReservationStep interface for given Reservation Step Type");
             }
-            return instance.Invoke();
+            return instance();
         }
     }
 }

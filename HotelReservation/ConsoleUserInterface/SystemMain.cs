@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
 using HotelReservation.ReservationSteps;
+using HotelReservation;
+using System.Collections.Generic;
 
 namespace ConsoleUserInterface
 {
@@ -59,7 +61,11 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId));
+                        var stepsList = hotelSystem.GetHotelReservationSteps(hotelId);
+                        var stepInput = new StepInput(typeof(string), "name", "Please provide your name: ");
+                        Console.WriteLine(stepInput.QuestionText);
+                        stepInput.setValue(Console.ReadLine());
+                        stepsExecutor.ExecuteSteps(stepsList, new ConsolePrinter(), new List<StepInput> { stepInput });
                     }
                     catch (Exception ex)
                     {

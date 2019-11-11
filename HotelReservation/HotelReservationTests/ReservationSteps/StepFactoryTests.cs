@@ -1,6 +1,6 @@
 ﻿using System;
 using HotelReservation.ReservationSteps;
-using HotelReservation.ReservationSteps.Hotel;
+using HotelReservation.ReservationSteps.Reservation;
 using HotelReservation.ReservationSteps.Mail;
 using HotelReservation.ReservationSteps.Payment;
 using FluentAssertions;
