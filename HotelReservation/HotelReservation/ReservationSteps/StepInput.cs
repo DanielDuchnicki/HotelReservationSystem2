@@ -6,17 +6,16 @@ namespace HotelReservation.ReservationSteps
     {
         public Type InputType { get; private set; }
         public string Identifier { get; private set; }
-        public string QuestionText { get; private set; }
-        public dynamic Value { get; private set; }
+        public string Value { get; private set; }
 
-        public StepInput(Type type, string identifier, string questionText)
+        public StepInput(Type type, string identifier)
         {
             InputType = type;
             Identifier = identifier;
-            QuestionText = questionText;
+            Value = null;
         }
 
-        public void setValue(dynamic value)
+        public void SetValue(string value)
         {
             Value = value;
         }

@@ -4,7 +4,7 @@ namespace HotelReservation
 {
     public class ConsolePrinter
     {
-        public virtual void Execute(string message)
+        public virtual void Write(string message)
         {
             Console.WriteLine(message);
         }

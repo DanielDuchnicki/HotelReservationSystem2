@@ -1,6 +1,7 @@
 ﻿using HotelReservation.ReservationSteps.Reservation;
 using HotelReservation;
 using FakeItEasy;
+using FluentAssertions;
 using NUnit.Framework;
 using HotelReservation.ReservationSteps;
 using System.Collections.Generic;
@@ -11,36 +12,40 @@ namespace HotelReservationTests.ReservationSteps.Reservation
     class ReservationStartProcessTests
     {
         ReservationStartProcess _subject;
+        ConsolePrinter _consolePrinterDouble;
 
         [SetUp]
         public void BeforeTest()
         {
-            _subject = new ReservationStartProcess();
+            _consolePrinterDouble = A.Fake<ConsolePrinter>();
+            _subject = new ReservationStartProcess(_consolePrinterDouble);
         }
 
         [Test]
-        public void ShouldCallConsolePrinter()
+        public void ShouldCreateNewReservationStartProcessObject()
         {
-            var consolePrinterDouble = A.Fake<ConsolePrinter>();
-            var stepInputDouble = new StepInput(typeof(string), "name", "");
-            stepInputDouble.setValue("");
-
-            _subject.Execute(consolePrinterDouble, new List<StepInput> { stepInputDouble });
-
-            A.CallTo(() => consolePrinterDouble.Execute("----==== RESERVATION PROCESS ====----")).MustHaveHappened();
+            var reservationStartProcess = new ReservationStartProcess(_consolePrinterDouble);
+            reservationStartProcess.Should().BeOfType(typeof(ReservationStartProcess));
         }
 
         [Test]
-        public void ShouldCallConsolePrinterWithProvidedArgument()
+        public void ShouldProvideReservationStartProcessInputs()
         {
-            var consolePrinterDouble = A.Fake<ConsolePrinter>();
-            var stepInputDouble = new StepInput(typeof(string), "name", "");
-            stepInputDouble.setValue("Test value");
+            var name = new StepInput(typeof(string), "name");
+            var stepInputs = new List<StepInput> { name };
 
-            _subject.Execute(consolePrinterDouble, new List<StepInput> { stepInputDouble });
-
-            A.CallTo(() => consolePrinterDouble.Execute("Test value")).MustHaveHappened();
+            _subject.GetStepInputs().Should().BeEquivalentTo(stepInputs);
         }
 
+        [Test]
+        public void ExecuteShouldCallConsolePrinterWithStepName()
+        {
+            var stepInputDouble = new StepInput(typeof(string), "name");
+            stepInputDouble.SetValue("");
+
+            _subject.Execute();
+
+            A.CallTo(() => _consolePrinterDouble.Write("----==== RESERVATION PROCESS ====----")).MustHaveHappened();
+        }
     }
 }

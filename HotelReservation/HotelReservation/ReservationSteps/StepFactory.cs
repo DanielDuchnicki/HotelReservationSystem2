@@ -11,12 +11,11 @@ namespace HotelReservation.ReservationSteps
         private readonly Dictionary<ReservationStepType, Func<IReservationStep>> _reservationStepsInstances;
         public StepFactory()
         {
-            
             _reservationStepsInstances = new Dictionary<ReservationStepType, Func<IReservationStep>>
                 {
-                    {ReservationStepType.ReservationProcess, () => new ReservationStartProcess()},
-                    {ReservationStepType.SendingMailProcess, () => new SendingMailProcess()},
-                    {ReservationStepType.PaymentProcess, () => new PaymentProcess()}
+                    {ReservationStepType.ReservationProcess, () => new ReservationStartProcess(new ConsolePrinter())},
+                    {ReservationStepType.SendingMailProcess, () => new SendingMailProcess(new ConsolePrinter())},
+                    {ReservationStepType.PaymentProcess, () => new PaymentProcess(new ConsolePrinter())}
                 };
         }
 

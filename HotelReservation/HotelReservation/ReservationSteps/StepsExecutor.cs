@@ -10,10 +10,24 @@ namespace HotelReservation.ReservationSteps
             _stepFactory = stepFactory;
         }
 
-        public void ExecuteSteps(List<ReservationStepType> reservationSteps, ConsolePrinter consolePrinter, List<StepInput> stepsData)
+        public List<StepInput> SetStepInputsValues(List<StepInput> stepInputs, List<StepInput> stepsData)
         {
+            foreach (var stepInput in stepInputs)
+            {
+                stepInput.SetValue(stepsData.Find(stepInputData => stepInputData.Identifier == stepInput.Identifier).Value);
+            }
+            return stepInputs;
+        }
+
+        public void ExecuteSteps(List<ReservationStepType> reservationSteps, List<StepInput> stepsData)
+        {
+            IReservationStep reservationStepInstance;
             foreach (var reservationStep in reservationSteps)
-                _stepFactory.CreateInstance(reservationStep).Execute(consolePrinter, stepsData);
+            {
+                reservationStepInstance = _stepFactory.CreateInstance(reservationStep);
+                SetStepInputsValues(reservationStepInstance.GetStepInputs(), stepsData);
+                reservationStepInstance.Execute();
+            }
         }
 
     }

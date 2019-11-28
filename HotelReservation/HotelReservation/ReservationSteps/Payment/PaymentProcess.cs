@@ -4,9 +4,20 @@ namespace HotelReservation.ReservationSteps.Payment
 {
     public class PaymentProcess : IReservationStep
     {
-        public void Execute(ConsolePrinter consolePrinter, List<StepInput> stepData)
+        private ConsolePrinter _consolePrinter;
+        public List<StepInput> stepInputs;
+        public PaymentProcess(ConsolePrinter consolePrinter)
         {
-            new ConsolePrinter().Execute("----==== PAYMENT PROCESS ====----");
+            _consolePrinter = consolePrinter;
+            stepInputs = new List<StepInput>();
+        }
+        public List<StepInput> GetStepInputs()
+        {
+            return stepInputs;
+        }
+        public void Execute()
+        {
+            _consolePrinter.Write("----==== PAYMENT PROCESS ====----");
         }
     }
 }

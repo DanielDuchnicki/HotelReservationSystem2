@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using FakeItEasy;
+using FluentAssertions;
 using HotelReservation.ReservationSteps;
 using NUnit.Framework;
-using HotelReservation;
 
 namespace HotelReservationTests.ReservationSteps
 {
@@ -11,7 +11,6 @@ namespace HotelReservationTests.ReservationSteps
     {
         private StepsExecutor _subject;
         private StepFactory _stepFactoryDouble;
-        private ConsolePrinter _consolePrinter;
         private List<StepInput> _stepInputList;
 
         [SetUp]
@@ -19,8 +18,7 @@ namespace HotelReservationTests.ReservationSteps
         {
             _stepFactoryDouble = A.Fake<StepFactory>();
             _subject = new StepsExecutor(_stepFactoryDouble);
-            _consolePrinter = new ConsolePrinter();
-            _stepInputList = new List<StepInput> { };
+            _stepInputList = null;
         }
 
         [Test]
@@ -30,9 +28,9 @@ namespace HotelReservationTests.ReservationSteps
 
             A.CallTo(() => _stepFactoryDouble.CreateInstance(A<ReservationStepType>._)).Returns(stepDouble);
 
-            _subject.ExecuteSteps(new List<ReservationStepType> { (ReservationStepType)(-1) }, _consolePrinter, _stepInputList);
+            _subject.ExecuteSteps(new List<ReservationStepType> { (ReservationStepType)(-1) }, _stepInputList);
 
-            A.CallTo(() => stepDouble.Execute(_consolePrinter, _stepInputList)).MustHaveHappened();
+            A.CallTo(() => stepDouble.Execute()).MustHaveHappened();
         }
 
         [Test]
@@ -40,7 +38,7 @@ namespace HotelReservationTests.ReservationSteps
         {
             var providedType = ReservationStepType.PaymentProcess;
 
-            _subject.ExecuteSteps(new List<ReservationStepType> { providedType }, _consolePrinter, _stepInputList);
+            _subject.ExecuteSteps(new List<ReservationStepType> { providedType }, _stepInputList);
 
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedType)).MustHaveHappened();
         }
@@ -55,9 +53,9 @@ namespace HotelReservationTests.ReservationSteps
             var providedListOfSteps = new List<ReservationStepType> {
                 (ReservationStepType)(-1), (ReservationStepType)(-1), (ReservationStepType)(-1) };
 
-            _subject.ExecuteSteps(providedListOfSteps, _consolePrinter, _stepInputList);
+            _subject.ExecuteSteps(providedListOfSteps, _stepInputList);
 
-            A.CallTo(() => StepDouble.Execute(_consolePrinter, _stepInputList)).MustHaveHappened(3, Times.Exactly);
+            A.CallTo(() => StepDouble.Execute()).MustHaveHappened(3, Times.Exactly);
         }
 
         [Test]
@@ -66,10 +64,28 @@ namespace HotelReservationTests.ReservationSteps
             var providedListOfTypes = new List<ReservationStepType> {
                 ReservationStepType.PaymentProcess, ReservationStepType.SendingMailProcess };
 
-            _subject.ExecuteSteps(providedListOfTypes, _consolePrinter, _stepInputList);
+            _subject.ExecuteSteps(providedListOfTypes, _stepInputList);
 
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[0])).MustHaveHappened();
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[1])).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldSetStepInputsValues()
+        {
+            var stepDataInput = new StepInput(typeof(string), "name");
+            stepDataInput.SetValue("Testing");
+            var stepsData = new List<StepInput> { stepDataInput };
+
+            var result = _subject.SetStepInputsValues(new List<StepInput> { new StepInput(typeof(string), "name") }, stepsData);
+
+            result.Should().BeEquivalentTo(stepsData);
+        }
+
+        [Test]
+        public void ShouldThrowExceptionWhenNoDataFound()
+        {
+
         }
     }
 }

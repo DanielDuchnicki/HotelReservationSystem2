@@ -4,13 +4,25 @@ namespace HotelReservation.ReservationSteps.Reservation
 {
     public class ReservationStartProcess : IReservationStep
     {
-        string name;
-        public void Execute(ConsolePrinter consolePrinter, List<StepInput> stepData)
-        {
-            name = stepData.Find(stepInput => stepInput.Identifier == "name").Value;
+        private ConsolePrinter _consolePrinter;
+        private StepInput name = new StepInput(typeof(string), "name");
+        private List<StepInput> stepInputs;
 
-            consolePrinter.Execute("----==== RESERVATION PROCESS ====----");
-            consolePrinter.Execute(name);
+        public ReservationStartProcess(ConsolePrinter consolePrinter)
+        {
+            _consolePrinter = consolePrinter;
+            stepInputs = new List<StepInput>{name};
+        }
+
+        public List<StepInput> GetStepInputs()
+        {
+            return stepInputs;
+        }
+
+        public void Execute()
+        {
+            _consolePrinter.Write("----==== RESERVATION PROCESS ====----");
+            _consolePrinter.Write(name.Value);
         }
     }
 }

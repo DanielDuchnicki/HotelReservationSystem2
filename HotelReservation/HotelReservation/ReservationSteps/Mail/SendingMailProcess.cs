@@ -4,9 +4,20 @@ namespace HotelReservation.ReservationSteps.Mail
 {
     public class SendingMailProcess : IReservationStep
     {
-        public void Execute(ConsolePrinter consolePrinter, List<StepInput> stepData)
+        private ConsolePrinter _consolePrinter;
+        public List<StepInput> stepInputs;
+        public SendingMailProcess(ConsolePrinter consolePrinter)
         {
-            new ConsolePrinter().Execute("----==== SENDING MAIL PROCESS ====----");
+            _consolePrinter = consolePrinter;
+            stepInputs = new List<StepInput>();
+        }
+        public List<StepInput> GetStepInputs()
+        {
+            return stepInputs;
+        }
+        public void Execute()
+        {
+            _consolePrinter.Write("----==== SENDING MAIL PROCESS ====----");
         }
     }
 }
