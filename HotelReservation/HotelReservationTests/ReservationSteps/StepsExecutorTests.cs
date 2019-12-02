@@ -73,11 +73,11 @@ namespace HotelReservationTests.ReservationSteps
         [Test]
         public void ShouldSetStepInputsValues()
         {
-            var stepDataInput = new StepInput(typeof(string), "name");
+            var stepDataInput = new StepInput(typeof(string), QuestionIdentifier.Name);
             stepDataInput.SetValue("Testing");
             var stepsData = new List<StepInput> { stepDataInput };
 
-            var result = _subject.SetStepInputsValues(new List<StepInput> { new StepInput(typeof(string), "name") }, stepsData);
+            var result = _subject.SetStepInputsValues(new List<StepInput> { new StepInput(typeof(string), QuestionIdentifier.Name) }, stepsData);
 
             result.Should().BeEquivalentTo(stepsData);
         }

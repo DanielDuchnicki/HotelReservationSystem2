@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Net.Mail;
 
 namespace HotelReservation.ReservationSteps.Reservation
 {
     public class ReservationStartProcess : IReservationStep
     {
         private ConsolePrinter _consolePrinter;
-        private StepInput name = new StepInput(typeof(string), "name");
+        private StepInput name = new StepInput(typeof(string), QuestionIdentifier.Name);
+        private StepInput email = new StepInput(typeof(MailAddress), QuestionIdentifier.EmailAddress);
         private List<StepInput> stepInputs;
 
         public ReservationStartProcess(ConsolePrinter consolePrinter)

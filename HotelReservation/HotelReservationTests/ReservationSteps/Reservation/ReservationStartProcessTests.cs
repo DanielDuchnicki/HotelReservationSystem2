@@ -31,7 +31,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         [Test]
         public void ShouldProvideReservationStartProcessInputs()
         {
-            var name = new StepInput(typeof(string), "name");
+            var name = new StepInput(typeof(string), QuestionIdentifier.Name);
             var stepInputs = new List<StepInput> { name };
 
             _subject.GetStepInputs().Should().BeEquivalentTo(stepInputs);
@@ -40,7 +40,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         [Test]
         public void ExecuteShouldCallConsolePrinterWithStepName()
         {
-            var stepInputDouble = new StepInput(typeof(string), "name");
+            var stepInputDouble = new StepInput(typeof(string), QuestionIdentifier.Name);
             stepInputDouble.SetValue("");
 
             _subject.Execute();
