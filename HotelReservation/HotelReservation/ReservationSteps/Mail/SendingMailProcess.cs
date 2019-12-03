@@ -15,7 +15,7 @@ namespace HotelReservation.ReservationSteps.Mail
         {
             return stepInputs;
         }
-        public void Execute()
+        public void Execute(List<StepInput> stepInputs)
         {
             _consolePrinter.Write("----==== SENDING MAIL PROCESS ====----");
         }

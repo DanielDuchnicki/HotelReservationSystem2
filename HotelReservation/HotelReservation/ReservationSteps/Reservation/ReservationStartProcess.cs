@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Mail;
 
 namespace HotelReservation.ReservationSteps.Reservation
@@ -13,7 +14,7 @@ namespace HotelReservation.ReservationSteps.Reservation
         public ReservationStartProcess(ConsolePrinter consolePrinter)
         {
             _consolePrinter = consolePrinter;
-            stepInputs = new List<StepInput>{name};
+            stepInputs = new List<StepInput>{ name, email };
         }
 
         public List<StepInput> GetStepInputs()
@@ -21,10 +22,21 @@ namespace HotelReservation.ReservationSteps.Reservation
             return stepInputs;
         }
 
-        public void Execute()
+        public void Execute(List<StepInput> stepInputs)
         {
+            string nameInput;
+            try
+            {
+                nameInput = stepInputs.Find(stepInputData => stepInputData.Identifier == name.Identifier).Value;
+            }
+            catch (NullReferenceException)
+            {
+                throw new NullReferenceException("StepInput hasn't been correctly set!");
+                //tu logowanie stacktrace
+            }
+      
             _consolePrinter.Write("----==== RESERVATION PROCESS ====----");
-            _consolePrinter.Write(name.Value);
+            _consolePrinter.Write(nameInput);
         }
     }
 }

@@ -5,6 +5,8 @@ using FluentAssertions;
 using NUnit.Framework;
 using HotelReservation.ReservationSteps;
 using System.Collections.Generic;
+using System.Net.Mail;
+using System;
 
 namespace HotelReservationTests.ReservationSteps.Reservation
 {
@@ -13,12 +15,16 @@ namespace HotelReservationTests.ReservationSteps.Reservation
     {
         ReservationStartProcess _subject;
         ConsolePrinter _consolePrinterDouble;
+        StepInput _name;
+        StepInput _email;
 
         [SetUp]
         public void BeforeTest()
         {
             _consolePrinterDouble = A.Fake<ConsolePrinter>();
             _subject = new ReservationStartProcess(_consolePrinterDouble);
+            _name = new StepInput(typeof(string), QuestionIdentifier.Name);
+            _email = new StepInput(typeof(MailAddress), QuestionIdentifier.EmailAddress);
         }
 
         [Test]
@@ -31,8 +37,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         [Test]
         public void ShouldProvideReservationStartProcessInputs()
         {
-            var name = new StepInput(typeof(string), QuestionIdentifier.Name);
-            var stepInputs = new List<StepInput> { name };
+            var stepInputs = new List<StepInput> { _name, _email };
 
             _subject.GetStepInputs().Should().BeEquivalentTo(stepInputs);
         }
@@ -40,12 +45,28 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         [Test]
         public void ExecuteShouldCallConsolePrinterWithStepName()
         {
-            var stepInputDouble = new StepInput(typeof(string), QuestionIdentifier.Name);
-            stepInputDouble.SetValue("");
-
-            _subject.Execute();
+            _subject.Execute(new List<StepInput> { _name });
 
             A.CallTo(() => _consolePrinterDouble.Write("----==== RESERVATION PROCESS ====----")).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldCallConsolePrinterWithProvidedArgument()
+        {
+            _name.SetValue("Test value");
+
+            _subject.Execute(new List<StepInput> { _name });
+
+            A.CallTo(() => _consolePrinterDouble.Write("Test value")).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldThrowExceptionWhenNoStepInputProvided()
+        {
+            var incorrectStepInput = new StepInput(typeof(string), (QuestionIdentifier)(-1));
+
+            Action act = () => _subject.Execute(new List<StepInput> { incorrectStepInput });
+            act.Should().Throw<NullReferenceException>().WithMessage("StepInput hasn't been correctly set!");
         }
     }
 }

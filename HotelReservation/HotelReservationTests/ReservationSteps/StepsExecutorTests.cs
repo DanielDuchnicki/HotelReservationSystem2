@@ -18,7 +18,7 @@ namespace HotelReservationTests.ReservationSteps
         {
             _stepFactoryDouble = A.Fake<StepFactory>();
             _subject = new StepsExecutor(_stepFactoryDouble);
-            _stepInputList = null;
+            _stepInputList = new List<StepInput>();
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace HotelReservationTests.ReservationSteps
 
             _subject.ExecuteSteps(new List<ReservationStepType> { (ReservationStepType)(-1) }, _stepInputList);
 
-            A.CallTo(() => stepDouble.Execute()).MustHaveHappened();
+            A.CallTo(() => stepDouble.Execute(_stepInputList)).MustHaveHappened();
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace HotelReservationTests.ReservationSteps
 
             _subject.ExecuteSteps(providedListOfSteps, _stepInputList);
 
-            A.CallTo(() => StepDouble.Execute()).MustHaveHappened(3, Times.Exactly);
+            A.CallTo(() => StepDouble.Execute(_stepInputList)).MustHaveHappened(3, Times.Exactly);
         }
 
         [Test]
@@ -68,24 +68,6 @@ namespace HotelReservationTests.ReservationSteps
 
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[0])).MustHaveHappened();
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[1])).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldSetStepInputsValues()
-        {
-            var stepDataInput = new StepInput(typeof(string), QuestionIdentifier.Name);
-            stepDataInput.SetValue("Testing");
-            var stepsData = new List<StepInput> { stepDataInput };
-
-            var result = _subject.SetStepInputsValues(new List<StepInput> { new StepInput(typeof(string), QuestionIdentifier.Name) }, stepsData);
-
-            result.Should().BeEquivalentTo(stepsData);
-        }
-
-        [Test]
-        public void ShouldThrowExceptionWhenNoDataFound()
-        {
-
         }
     }
 }
