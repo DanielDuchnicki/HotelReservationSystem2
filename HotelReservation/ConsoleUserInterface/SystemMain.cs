@@ -10,12 +10,9 @@ namespace ConsoleUserInterface
     {
         public static void DisplayMenu()
         {
-            Console.WriteLine();
-            Console.WriteLine("----==== RESERVATION SYSTEM ====----");
-            Console.WriteLine("1 - Start new reservation");
-            Console.WriteLine();
-            Console.WriteLine("0 - EXIT");
-            Console.WriteLine();
+            Console.WriteLine("\n----==== RESERVATION SYSTEM ====----");
+            Console.WriteLine("1 - Start new reservation\n");
+            Console.WriteLine("0 - EXIT\n");
             Console.WriteLine("Choose, what you want to do:");
         }
 
@@ -36,11 +33,9 @@ namespace ConsoleUserInterface
         public static int SelectHotel()
         {
             Console.WriteLine("Please check list of hotels and choose one for you!");
-            Console.WriteLine("Please provide hotel ID: ");
-            var selectedHotelId = Console.ReadLine();
+            Console.WriteLine("Please provide hotel ID:\n");
             var parsedHotelId = 0;
-            Console.WriteLine();
-            return !int.TryParse(selectedHotelId, out parsedHotelId) ? 0 : parsedHotelId;
+            return !int.TryParse(Console.ReadLine(), out parsedHotelId) ? 0 : parsedHotelId;
         }
 
         public static int Menu(HotelSystem hotelSystem, StepsExecutor stepsExecutor)
@@ -54,8 +49,7 @@ namespace ConsoleUserInterface
                     break;
                 case "1":
                     Console.Clear();
-                    var hotels = hotelSystem.GetHotels();
-                    DisplayHotels(hotels);
+                    DisplayHotels(hotelSystem.GetHotels());
                     var hotelId = SelectHotel();
                     Console.Clear();
                     try
