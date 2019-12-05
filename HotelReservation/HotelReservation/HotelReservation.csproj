@@ -52,7 +52,7 @@
     <Compile Include="Hotels\SystemInit.cs" />
     <Compile Include="ProcessControler.cs" />
     <Compile Include="ReservationSteps\IReservationStep.cs" />
-    <Compile Include="ReservationSteps\QuestionIdentifier.cs" />
+    <Compile Include="ReservationSteps\InputType.cs" />
     <Compile Include="ReservationSteps\StepInput.cs" />
     <Compile Include="ReservationSteps\Payment\PaymentProcess.cs" />
     <Compile Include="ReservationSteps\Mail\SendingMailProcess.cs" />

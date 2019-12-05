@@ -4,13 +4,11 @@ namespace HotelReservation.ReservationSteps
 {
     public class StepInput
     {
-        public Type InputType { get; private set; }
-        public QuestionIdentifier Identifier { get; private set; }
+        public InputType Identifier { get; private set; }
         public string Value { get; private set; }
 
-        public StepInput(Type type, QuestionIdentifier identifier)
+        public StepInput(InputType identifier)
         {
-            InputType = type;
             Identifier = identifier;
             Value = null;
         }

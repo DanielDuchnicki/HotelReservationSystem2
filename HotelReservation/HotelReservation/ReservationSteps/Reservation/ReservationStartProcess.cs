@@ -7,8 +7,8 @@ namespace HotelReservation.ReservationSteps.Reservation
     public class ReservationStartProcess : IReservationStep
     {
         private ConsolePrinter _consolePrinter;
-        private StepInput name = new StepInput(typeof(string), QuestionIdentifier.Name);
-        private StepInput email = new StepInput(typeof(MailAddress), QuestionIdentifier.EmailAddress);
+        private StepInput name = new StepInput(InputType.Name);
+        private StepInput email = new StepInput(InputType.EmailAddress);
         private List<StepInput> stepInputs;
 
         public ReservationStartProcess(ConsolePrinter consolePrinter)

@@ -55,7 +55,7 @@ namespace ConsoleUserInterface
                     try
                     {
                         var stepsList = hotelSystem.GetHotelReservationSteps(hotelId);
-                        var stepInput = new StepInput(typeof(string), QuestionIdentifier.Name);
+                        var stepInput = new StepInput(InputType.Name);
                         Console.WriteLine("Please provide your name: ");
                         stepInput.SetValue(Console.ReadLine());
                         stepsExecutor.ExecuteSteps(stepsList, new List<StepInput> { stepInput });

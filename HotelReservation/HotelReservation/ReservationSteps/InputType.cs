@@ -1,6 +1,6 @@
 ﻿namespace HotelReservation.ReservationSteps
 {
-    public enum QuestionIdentifier
+    public enum InputType
     {
         Name,
         EmailAddress

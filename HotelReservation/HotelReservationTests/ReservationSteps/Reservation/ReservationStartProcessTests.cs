@@ -23,15 +23,8 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         {
             _consolePrinterDouble = A.Fake<ConsolePrinter>();
             _subject = new ReservationStartProcess(_consolePrinterDouble);
-            _name = new StepInput(typeof(string), QuestionIdentifier.Name);
-            _email = new StepInput(typeof(MailAddress), QuestionIdentifier.EmailAddress);
-        }
-
-        [Test]
-        public void ShouldCreateNewReservationStartProcessObject()
-        {
-            var reservationStartProcess = new ReservationStartProcess(_consolePrinterDouble);
-            reservationStartProcess.Should().BeOfType(typeof(ReservationStartProcess));
+            _name = new StepInput(InputType.Name);
+            _email = new StepInput(InputType.EmailAddress);
         }
 
         [Test]
@@ -53,17 +46,20 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         [Test]
         public void ShouldCallConsolePrinterWithProvidedArgument()
         {
-            _name.SetValue("Test value");
+            const string nameValue = "Test value";
+
+            _name.SetValue(nameValue);
 
             _subject.Execute(new List<StepInput> { _name });
 
-            A.CallTo(() => _consolePrinterDouble.Write("Test value")).MustHaveHappened();
+            A.CallTo(() => _consolePrinterDouble.Write(nameValue)).MustHaveHappened();
         }
 
         [Test]
-        public void ShouldThrowExceptionWhenNoStepInputProvided()
+        public void ShouldThrowExceptionWhenNameInputIsMissing()
         {
-            var incorrectStepInput = new StepInput(typeof(string), (QuestionIdentifier)(-1));
+            const InputType unexpectedInputType = (InputType)(-1);
+            var incorrectStepInput = new StepInput(unexpectedInputType);
 
             Action act = () => _subject.Execute(new List<StepInput> { incorrectStepInput });
             act.Should().Throw<NullReferenceException>().WithMessage("StepInput hasn't been correctly set!");
