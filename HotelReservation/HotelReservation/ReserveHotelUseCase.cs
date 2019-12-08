@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HotelReservation
 {
@@ -45,8 +46,8 @@ namespace HotelReservation
             List<StepInput> stepInputs = new List<StepInput>();
             foreach (var reservationStep in reservationSteps)
             {
-
-                stepInputs.AddRange(reservationStep.GetStepInputs());
+                stepInputs.AddRange(reservationStep.GetStepInputs().
+                    Where(stepInputsList => stepInputs.FirstOrDefault(stepInput => stepInput.Identifier == stepInputsList.Identifier) == null));
             }
             return new ReadOnlyCollection<StepInput>(stepInputs);
         }
