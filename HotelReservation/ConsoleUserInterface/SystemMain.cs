@@ -39,6 +39,18 @@ namespace ConsoleUserInterface
             return !int.TryParse(Console.ReadLine(), out parsedHotelId) ? 0 : parsedHotelId;
         }
 
+        public static List<StepInput> GatherStepInputsValues(ReadOnlyCollection<StepInput> stepInputs)
+        {
+            var stepInputsValues = new List<StepInput>();
+            foreach (var stepInput in stepInputs)
+            {
+                Console.WriteLine("Please provide your " + stepInput.Identifier + ": ");
+                stepInput.SetValue(Console.ReadLine());
+                stepInputsValues.Add(stepInput);
+            }
+            return stepInputsValues;
+        }
+
         public static int Menu(ReserveHotelUsecase reserveHotelUsecase)
         {
             DisplayMenu();
@@ -55,16 +67,7 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        var stepsList = reserveHotelUsecase.GetHotelReservationSteps(hotelId);
-                        var steps = reserveHotelUsecase.CreateStepsInstances(stepsList);
-                        var stepInputs = reserveHotelUsecase.GetStepsInputs(steps);
-                        var stepInputsToExecute = new List<StepInput>();
-                        foreach (var stepInput in stepInputs){
-                            Console.WriteLine("Please provide your " + stepInput.Identifier + ": ");
-                            stepInput.SetValue(Console.ReadLine());
-                            stepInputsToExecute.Add(stepInput);
-                        }
-                        reserveHotelUsecase.ExecuteSteps(steps, stepInputsToExecute);
+                        reserveHotelUsecase.ExecuteStepsForHotelId(hotelId, GatherStepInputsValues(reserveHotelUsecase.GetRequiredStepInputsForHotelId(hotelId)));
                     }
                     catch (Exception ex)
                     {

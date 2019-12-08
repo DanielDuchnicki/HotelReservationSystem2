@@ -11,6 +11,7 @@ namespace HotelReservation
         private SystemInit _systemInit;
         private StepFactory _stepFactory;
         private StepsExecutor _stepExecutor;
+
         public ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory, StepsExecutor stepExecutor)
         {
             _hotelSystem = hotelSystem;
@@ -50,10 +51,23 @@ namespace HotelReservation
             return new ReadOnlyCollection<StepInput>(stepInputs);
         }
 
+        public ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
+        {
+            var reservationStepTypes = GetHotelReservationSteps(hotelId);
+            var reservationSteps = CreateStepsInstances(reservationStepTypes);
+            return GetStepsInputs(reservationSteps);
+        }
+
         public void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
         {
             _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
         }
 
+        public void ExecuteStepsForHotelId(int hotelId, List<StepInput> stepsInputs)
+        {
+            var reservationStepTypes = GetHotelReservationSteps(hotelId);
+            var reservationSteps = CreateStepsInstances(reservationStepTypes);
+            ExecuteSteps(reservationSteps, stepsInputs);
+        }
     }
 }
