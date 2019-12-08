@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
 using HotelReservation.ReservationSteps;
 using System.Collections.Generic;
+using HotelReservation;
 
 namespace ConsoleUserInterface
 {
@@ -38,7 +39,7 @@ namespace ConsoleUserInterface
             return !int.TryParse(Console.ReadLine(), out parsedHotelId) ? 0 : parsedHotelId;
         }
 
-        public static int Menu(HotelSystem hotelSystem, StepsExecutor stepsExecutor)
+        public static int Menu(HotelSystem hotelSystem, ReserveHotelUsecase reserveHotelUsecase, StepsExecutor stepsExecutor)
         {
             DisplayMenu();
             var choice = Console.ReadLine();
@@ -49,7 +50,7 @@ namespace ConsoleUserInterface
                     break;
                 case "1":
                     Console.Clear();
-                    DisplayHotels(hotelSystem.GetHotels());
+                    DisplayHotels(reserveHotelUsecase.GetHotels());
                     var hotelId = SelectHotel();
                     Console.Clear();
                     try
@@ -76,14 +77,14 @@ namespace ConsoleUserInterface
         public static void Main()
         {
             var hotelSystem = new HotelSystem();
-            new SystemInit().AddHotels(hotelSystem);
+            var reserveHotelUsecase = new ReserveHotelUsecase(hotelSystem);
             var stepsExecutor = new StepsExecutor(new StepFactory());
 
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
             int choice;
             do
             {
-                choice = Menu(hotelSystem, stepsExecutor);
+                choice = Menu(hotelSystem, reserveHotelUsecase, stepsExecutor);
             } while (choice != 0);
         }
     }

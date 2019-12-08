@@ -50,7 +50,7 @@
     <Compile Include="Hotels\Hotel.cs" />
     <Compile Include="Hotels\HotelSystem.cs" />
     <Compile Include="Hotels\SystemInit.cs" />
-    <Compile Include="ProcessControler.cs" />
+    <Compile Include="ReserveHotelUsecase.cs" />
     <Compile Include="ReservationSteps\IReservationStep.cs" />
     <Compile Include="ReservationSteps\InputType.cs" />
     <Compile Include="ReservationSteps\StepInput.cs" />

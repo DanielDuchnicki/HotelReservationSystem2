@@ -72,6 +72,7 @@
     <Compile Include="ReservationSteps\Reservation\ReservationStartProcessTests.cs" />
     <Compile Include="ReservationSteps\StepFactoryTests.cs" />
     <Compile Include="ReservationSteps\StepsExecutorTests.cs" />
+    <Compile Include="ReserveHotelUsecaseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

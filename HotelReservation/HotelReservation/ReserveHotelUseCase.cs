@@ -4,11 +4,19 @@ using HotelReservation.Hotels;
 
 namespace HotelReservation
 {
-    public class ProcessControler
+    public class ReserveHotelUsecase
     {
+        private HotelSystem _hotelSystem;
+        private SystemInit _systemInit;
+        public ReserveHotelUsecase(HotelSystem hotelSystem)
+        {
+            _hotelSystem = hotelSystem;
+            _systemInit = new SystemInit();
+            _systemInit.AddHotels(_hotelSystem);
+        }
         public ReadOnlyCollection<Hotel> GetHotels()
         {
-            return null;
+            return _hotelSystem.GetHotels();
         }
 
         public ReadOnlyCollection<ReservationStepType> GetHotelReservationSteps(int hotelId)

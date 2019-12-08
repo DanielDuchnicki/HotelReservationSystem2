@@ -17,7 +17,7 @@ namespace HotelReservation.Hotels
             _hotels.Add(newHotel);
         }
 
-        public ReadOnlyCollection<Hotel> GetHotels()
+        public virtual ReadOnlyCollection<Hotel> GetHotels()
         {
             return new ReadOnlyCollection<Hotel>(_hotels);
         }
