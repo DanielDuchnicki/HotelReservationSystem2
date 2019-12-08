@@ -37,14 +37,20 @@ namespace HotelReservation
             return reservationSteps;
         }
 
-        public ReadOnlyCollection<StepInput> GetStepsInputs(ReadOnlyCollection<IReservationStep> reservationSteps)
+        public ReadOnlyCollection<StepInput> GetStepsInputs(List<IReservationStep> reservationSteps)
         {
-            return null;
+            List<StepInput> stepInputs = new List<StepInput>();
+            foreach (var reservationStep in reservationSteps)
+            {
+
+                stepInputs.AddRange(reservationStep.GetStepInputs());
+            }
+            return new ReadOnlyCollection<StepInput>(stepInputs);
         }
 
         public void ExecuteSteps(ReadOnlyCollection<StepInput> stepsInputs)
         {
-
+            
         }
 
     }

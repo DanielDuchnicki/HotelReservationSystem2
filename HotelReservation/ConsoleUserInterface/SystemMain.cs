@@ -57,10 +57,14 @@ namespace ConsoleUserInterface
                     {
                         var stepsList = reserveHotelUsecase.GetHotelReservationSteps(hotelId);
                         var steps = reserveHotelUsecase.CreateStepsInstances(stepsList);
-                        var stepInput = new StepInput(InputType.Name);
-                        Console.WriteLine("Please provide your name: ");
-                        stepInput.SetValue(Console.ReadLine());
-                        stepsExecutor.ExecuteSteps(steps, new List<StepInput> { stepInput });
+                        var stepInputs = reserveHotelUsecase.GetStepsInputs(steps);
+                        var stepInputsToExecute = new List<StepInput>();
+                        foreach (var stepInput in stepInputs){
+                            Console.WriteLine("Please provide your " + stepInput.Identifier + ": ");
+                            stepInput.SetValue(Console.ReadLine());
+                            stepInputsToExecute.Add(stepInput);
+                        }
+                        stepsExecutor.ExecuteSteps(steps, stepInputsToExecute);
                     }
                     catch (Exception ex)
                     {

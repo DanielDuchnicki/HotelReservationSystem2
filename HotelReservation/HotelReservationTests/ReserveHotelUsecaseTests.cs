@@ -61,5 +61,15 @@ namespace HotelReservationTests
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[0])).MustHaveHappened();
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[1])).MustHaveHappened();
         }
+
+        [Test]
+        public void ShoulCallStepGetHotelsMethod()
+        {
+            IReservationStep reservationStepDouble = A.Fake<IReservationStep>();
+
+            _subject.GetStepsInputs(new List<IReservationStep> { reservationStepDouble });
+
+            A.CallTo(() => reservationStepDouble.GetStepInputs()).MustHaveHappened();
+        }
     }
 }
