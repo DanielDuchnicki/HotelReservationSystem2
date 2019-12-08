@@ -22,7 +22,7 @@ namespace HotelReservation.ReservationSteps.Reservation
             return stepInputs;
         }
 
-        public void Execute(List<StepInput> stepInputs)
+        public virtual void Execute(List<StepInput> stepInputs)
         {
             string nameInput;
             try

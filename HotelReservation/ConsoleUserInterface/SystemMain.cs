@@ -56,10 +56,11 @@ namespace ConsoleUserInterface
                     try
                     {
                         var stepsList = reserveHotelUsecase.GetHotelReservationSteps(hotelId);
+                        var steps = reserveHotelUsecase.CreateStepsInstances(stepsList);
                         var stepInput = new StepInput(InputType.Name);
                         Console.WriteLine("Please provide your name: ");
                         stepInput.SetValue(Console.ReadLine());
-                        stepsExecutor.ExecuteSteps(stepsList, new List<StepInput> { stepInput });
+                        stepsExecutor.ExecuteSteps(steps, new List<StepInput> { stepInput });
                     }
                     catch (Exception ex)
                     {
@@ -76,8 +77,8 @@ namespace ConsoleUserInterface
 
         public static void Main()
         {
-            var reserveHotelUsecase = new ReserveHotelUsecase(new HotelSystem());
-            var stepsExecutor = new StepsExecutor(new StepFactory());
+            var reserveHotelUsecase = new ReserveHotelUsecase(new HotelSystem(), new StepFactory());
+            var stepsExecutor = new StepsExecutor();
 
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
             int choice;

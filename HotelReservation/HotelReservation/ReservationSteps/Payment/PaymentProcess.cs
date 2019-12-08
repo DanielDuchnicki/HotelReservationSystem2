@@ -15,7 +15,7 @@ namespace HotelReservation.ReservationSteps.Payment
         {
             return stepInputs;
         }
-        public void Execute(List<StepInput> stepInputs)
+        public virtual void Execute(List<StepInput> stepInputs)
         {
             _consolePrinter.Write("----==== PAYMENT PROCESS ====----");
         }

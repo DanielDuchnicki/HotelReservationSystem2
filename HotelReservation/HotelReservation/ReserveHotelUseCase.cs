@@ -9,9 +9,11 @@ namespace HotelReservation
     {
         private HotelSystem _hotelSystem;
         private SystemInit _systemInit;
-        public ReserveHotelUsecase(HotelSystem hotelSystem)
+        private StepFactory _stepFactory;
+        public ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory)
         {
             _hotelSystem = hotelSystem;
+            _stepFactory = stepFactory;
             _systemInit = new SystemInit();
             _systemInit.AddHotels(_hotelSystem);
         }
@@ -25,9 +27,14 @@ namespace HotelReservation
             return _hotelSystem.GetHotelReservationSteps(hotelId);
         }
 
-        public ReadOnlyCollection<IReservationStep> CreateSteps(ReadOnlyCollection<ReservationStepType> stepsTypes)
+        public List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
         {
-            return null;
+            List<IReservationStep> reservationSteps = new List<IReservationStep>();
+            foreach (var reservationStepType in reservationStepTypes)
+            {
+                reservationSteps.Add(_stepFactory.CreateInstance(reservationStepType));
+            }
+            return reservationSteps;
         }
 
         public ReadOnlyCollection<StepInput> GetStepsInputs(ReadOnlyCollection<IReservationStep> reservationSteps)

@@ -1,9 +1,9 @@
 ﻿using HotelReservation.Hotels;
-using System.Collections.ObjectModel;
 using NUnit.Framework;
 using FakeItEasy;
 using System.Collections.Generic;
 using HotelReservation;
+using HotelReservation.ReservationSteps;
 
 namespace HotelReservationTests
 {
@@ -12,13 +12,14 @@ namespace HotelReservationTests
     {
         ReserveHotelUsecase _subject;
         HotelSystem _hotelSystemDouble;
-        
+        StepFactory _stepFactoryDouble;
 
         [SetUp]
         public void BeforeTest()
         {
             _hotelSystemDouble = A.Fake<HotelSystem>();
-            _subject = new ReserveHotelUsecase(_hotelSystemDouble);
+            _stepFactoryDouble = A.Fake<StepFactory>();
+            _subject = new ReserveHotelUsecase(_hotelSystemDouble, _stepFactoryDouble);
         }
 
         [Test]
@@ -37,6 +38,28 @@ namespace HotelReservationTests
             _subject.GetHotelReservationSteps(dummyHotelId);
 
             A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(dummyHotelId)).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldCreateStepBasedOnProvidedType()
+        {
+            var providedType = ReservationStepType.PaymentProcess;
+
+            _subject.CreateStepsInstances(new List<ReservationStepType> { providedType });
+
+            A.CallTo(() => _stepFactoryDouble.CreateInstance(providedType)).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldCreateStepsBasedOnProvidedListOfStepsTypes()
+        {
+            var providedListOfTypes = new List<ReservationStepType> {
+                ReservationStepType.PaymentProcess, ReservationStepType.SendingMailProcess };
+
+            _subject.CreateStepsInstances(providedListOfTypes);
+
+            A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[0])).MustHaveHappened();
+            A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[1])).MustHaveHappened();
         }
     }
 }
