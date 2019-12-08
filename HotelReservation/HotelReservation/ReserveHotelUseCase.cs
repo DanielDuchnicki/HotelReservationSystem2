@@ -1,6 +1,7 @@
 ﻿using HotelReservation.ReservationSteps;
 using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
+using System.Collections.Generic;
 
 namespace HotelReservation
 {
@@ -19,9 +20,9 @@ namespace HotelReservation
             return _hotelSystem.GetHotels();
         }
 
-        public ReadOnlyCollection<ReservationStepType> GetHotelReservationSteps(int hotelId)
+        public List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
-            return null;
+            return _hotelSystem.GetHotelReservationSteps(hotelId);
         }
 
         public ReadOnlyCollection<IReservationStep> CreateSteps(ReadOnlyCollection<ReservationStepType> stepsTypes)

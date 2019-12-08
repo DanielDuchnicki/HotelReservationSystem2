@@ -25,7 +25,18 @@ namespace HotelReservationTests
         public void GetHotelsShouldCallHotelSystemGetHotels()
         {
             _subject.GetHotels();
+
             A.CallTo(() => _hotelSystemDouble.GetHotels()).MustHaveHappened();
+        }
+
+        [Test]
+        public void GetHotelReservationStepsShouldCallHotelSystemGetHotelReservationSteps()
+        {
+            var dummyHotelId = 1;
+
+            _subject.GetHotelReservationSteps(dummyHotelId);
+
+            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(dummyHotelId)).MustHaveHappened();
         }
     }
 }

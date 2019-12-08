@@ -22,7 +22,7 @@ namespace HotelReservation.Hotels
             return new ReadOnlyCollection<Hotel>(_hotels);
         }
 
-        public List<ReservationStepType> GetHotelReservationSteps(int hotelId)
+        public virtual List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             try
             {
