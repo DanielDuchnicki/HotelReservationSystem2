@@ -39,7 +39,7 @@ namespace ConsoleUserInterface
             return !int.TryParse(Console.ReadLine(), out parsedHotelId) ? 0 : parsedHotelId;
         }
 
-        public static int Menu(ReserveHotelUsecase reserveHotelUsecase, StepsExecutor stepsExecutor)
+        public static int Menu(ReserveHotelUsecase reserveHotelUsecase)
         {
             DisplayMenu();
             var choice = Console.ReadLine();
@@ -64,7 +64,7 @@ namespace ConsoleUserInterface
                             stepInput.SetValue(Console.ReadLine());
                             stepInputsToExecute.Add(stepInput);
                         }
-                        stepsExecutor.ExecuteSteps(steps, stepInputsToExecute);
+                        reserveHotelUsecase.ExecuteSteps(steps, stepInputsToExecute);
                     }
                     catch (Exception ex)
                     {
@@ -81,14 +81,13 @@ namespace ConsoleUserInterface
 
         public static void Main()
         {
-            var reserveHotelUsecase = new ReserveHotelUsecase(new HotelSystem(), new StepFactory());
-            var stepsExecutor = new StepsExecutor();
+            var reserveHotelUsecase = new ReserveHotelUsecase(new HotelSystem(), new StepFactory(), new StepsExecutor());
 
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
             int choice;
             do
             {
-                choice = Menu(reserveHotelUsecase, stepsExecutor);
+                choice = Menu(reserveHotelUsecase);
             } while (choice != 0);
         }
     }

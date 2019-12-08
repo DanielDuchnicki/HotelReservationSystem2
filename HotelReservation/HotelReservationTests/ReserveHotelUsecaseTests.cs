@@ -13,13 +13,15 @@ namespace HotelReservationTests
         ReserveHotelUsecase _subject;
         HotelSystem _hotelSystemDouble;
         StepFactory _stepFactoryDouble;
+        StepsExecutor _stepExecutorDouble;
 
         [SetUp]
         public void BeforeTest()
         {
             _hotelSystemDouble = A.Fake<HotelSystem>();
             _stepFactoryDouble = A.Fake<StepFactory>();
-            _subject = new ReserveHotelUsecase(_hotelSystemDouble, _stepFactoryDouble);
+            _stepExecutorDouble = A.Fake<StepsExecutor>();
+            _subject = new ReserveHotelUsecase(_hotelSystemDouble, _stepFactoryDouble, _stepExecutorDouble);
         }
 
         [Test]
@@ -63,13 +65,27 @@ namespace HotelReservationTests
         }
 
         [Test]
-        public void ShoulCallStepGetHotelsMethod()
+        public void ShouldCallStepGetHotelsMethod()
         {
             IReservationStep reservationStepDouble = A.Fake<IReservationStep>();
 
             _subject.GetStepsInputs(new List<IReservationStep> { reservationStepDouble });
 
             A.CallTo(() => reservationStepDouble.GetStepInputs()).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldCallStepExecutorExecuteSteps()
+        {
+            IReservationStep reservationStepDouble = A.Fake<IReservationStep>();
+            StepInput stepInputDouble = A.Fake<StepInput>();
+
+            List<IReservationStep> reservationStepsDouble = new List<IReservationStep> { reservationStepDouble };
+            List<StepInput> stepInputsDouble = new List<StepInput> { stepInputDouble };
+
+            _subject.ExecuteSteps(reservationStepsDouble, stepInputsDouble);
+
+            A.CallTo(() => _stepExecutorDouble.ExecuteSteps(reservationStepsDouble, stepInputsDouble)).MustHaveHappened();
         }
     }
 }

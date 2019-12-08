@@ -8,11 +8,11 @@ namespace HotelReservationTests.Hotels
     class SystemInitTests
     {
         [Test]
-        public void ShouldAddTwoHotelsToHotelsList()
+        public void ShouldAddThreeHotelsToHotelsList()
         {
             var hotelSystem = new HotelSystem();
             new SystemInit().AddHotels(hotelSystem);
-            hotelSystem.GetHotels().Should().HaveCount(2);
+            hotelSystem.GetHotels().Should().HaveCount(3);
         }
     }
 }

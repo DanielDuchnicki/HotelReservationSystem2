@@ -18,8 +18,14 @@ namespace HotelReservation.Hotels
                 ReservationStepType.ReservationProcess,
                 ReservationStepType.SendingMailProcess
             };
+            var thirdHotelReservationSteps = new List<ReservationStepType>()
+            {
+                ReservationStepType.PaymentProcess,
+                ReservationStepType.SendingMailProcess
+            };
             hotelSystem.AddNewHotel(firstHotelReservationSteps);
             hotelSystem.AddNewHotel(secondHotelReservationSteps);
+            hotelSystem.AddNewHotel(thirdHotelReservationSteps);
         }
     }
 }

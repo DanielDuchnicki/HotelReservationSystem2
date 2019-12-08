@@ -83,11 +83,8 @@ namespace HotelReservationTests.ReservationSteps
         public void ShouldExecuteThreeRealSteps()
         {
             var reservationStartProcessStepDouble = A.Fake<ReservationStartProcess>();
-            A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).DoesNothing();
             var PaymentProcessStepDouble = A.Fake<PaymentProcess>();
-            A.CallTo(() => PaymentProcessStepDouble.Execute(_stepInputList)).DoesNothing();
             var SendingMailProcessStepDouble = A.Fake<SendingMailProcess>();
-            A.CallTo(() => SendingMailProcessStepDouble.Execute(_stepInputList)).DoesNothing();
 
             _subject.ExecuteSteps(new List<IReservationStep> { reservationStartProcessStepDouble, PaymentProcessStepDouble, SendingMailProcessStepDouble }, _stepInputList);
 

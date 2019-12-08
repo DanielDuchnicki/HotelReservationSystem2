@@ -10,10 +10,12 @@ namespace HotelReservation
         private HotelSystem _hotelSystem;
         private SystemInit _systemInit;
         private StepFactory _stepFactory;
-        public ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory)
+        private StepsExecutor _stepExecutor;
+        public ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory, StepsExecutor stepExecutor)
         {
             _hotelSystem = hotelSystem;
             _stepFactory = stepFactory;
+            _stepExecutor = stepExecutor;
             _systemInit = new SystemInit();
             _systemInit.AddHotels(_hotelSystem);
         }
@@ -48,9 +50,9 @@ namespace HotelReservation
             return new ReadOnlyCollection<StepInput>(stepInputs);
         }
 
-        public void ExecuteSteps(ReadOnlyCollection<StepInput> stepsInputs)
+        public void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
         {
-            
+            _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
         }
 
     }
