@@ -2,7 +2,7 @@
 
 namespace HotelReservation.ReservationSteps
 {
-    public interface IReservationStep
+    internal interface IReservationStep
     {
         void Execute(List<StepInput> stepInputs);
         List<StepInput> GetStepInputs();

@@ -1,6 +1,6 @@
 ﻿namespace HotelReservation.ReservationSteps
 {
-    public enum ReservationStepType
+    internal enum ReservationStepType
     {
         ReservationProcess,
         SendingMailProcess,

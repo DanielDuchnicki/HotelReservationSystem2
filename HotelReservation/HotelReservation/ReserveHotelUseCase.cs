@@ -13,11 +13,20 @@ namespace HotelReservation
         private StepFactory _stepFactory;
         private StepsExecutor _stepExecutor;
 
-        public ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory, StepsExecutor stepExecutor)
+        internal ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory, StepsExecutor stepExecutor)
         {
             _hotelSystem = hotelSystem;
             _stepFactory = stepFactory;
             _stepExecutor = stepExecutor;
+            _systemInit = new SystemInit();
+            _systemInit.AddHotels(_hotelSystem);
+        }
+
+        public ReserveHotelUsecase()
+        {
+            _hotelSystem = new HotelSystem();
+            _stepFactory = new StepFactory();
+            _stepExecutor = new StepsExecutor();
             _systemInit = new SystemInit();
             _systemInit.AddHotels(_hotelSystem);
         }
@@ -26,12 +35,12 @@ namespace HotelReservation
             return _hotelSystem.GetHotels();
         }
 
-        public List<ReservationStepType> GetHotelReservationSteps(int hotelId)
+        internal List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             return _hotelSystem.GetHotelReservationSteps(hotelId);
         }
 
-        public List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
+        internal List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
         {
             List<IReservationStep> reservationSteps = new List<IReservationStep>();
             foreach (var reservationStepType in reservationStepTypes)
@@ -41,7 +50,7 @@ namespace HotelReservation
             return reservationSteps;
         }
 
-        public ReadOnlyCollection<StepInput> GetStepsInputs(List<IReservationStep> reservationSteps)
+        internal ReadOnlyCollection<StepInput> GetStepsInputs(List<IReservationStep> reservationSteps)
         {
             List<StepInput> stepInputs = new List<StepInput>();
             foreach (var reservationStep in reservationSteps)
@@ -59,7 +68,7 @@ namespace HotelReservation
             return GetStepsInputs(reservationSteps);
         }
 
-        public void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
+        internal void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
         {
             _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
         }

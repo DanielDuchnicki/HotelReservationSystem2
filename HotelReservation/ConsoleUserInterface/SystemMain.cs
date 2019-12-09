@@ -84,13 +84,11 @@ namespace ConsoleUserInterface
 
         public static void Main()
         {
-            var reserveHotelUsecase = new ReserveHotelUsecase(new HotelSystem(), new StepFactory(), new StepsExecutor());
-
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
             int choice;
             do
             {
-                choice = Menu(reserveHotelUsecase);
+                choice = Menu(new ReserveHotelUsecase());
             } while (choice != 0);
         }
     }

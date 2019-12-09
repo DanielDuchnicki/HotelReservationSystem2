@@ -5,24 +5,24 @@ using HotelReservation.ReservationSteps;
 
 namespace HotelReservation.Hotels
 {
-    public class HotelSystem
+    internal class HotelSystem
     {
         private readonly List<Hotel> _hotels = new List<Hotel>();
-        public int? LastHotelId { get; private set; } = null;
+        internal int? LastHotelId { get; private set; } = null;
 
-        public void AddNewHotel(List<ReservationStepType> hotelReservationSteps)
+        internal void AddNewHotel(List<ReservationStepType> hotelReservationSteps)
         {
             LastHotelId = (LastHotelId == null) ? 1 : ++LastHotelId;
             var newHotel = new Hotel(LastHotelId, hotelReservationSteps);
             _hotels.Add(newHotel);
         }
 
-        public virtual ReadOnlyCollection<Hotel> GetHotels()
+        internal virtual ReadOnlyCollection<Hotel> GetHotels()
         {
             return new ReadOnlyCollection<Hotel>(_hotels);
         }
 
-        public virtual List<ReservationStepType> GetHotelReservationSteps(int hotelId)
+        internal virtual List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             try
             {

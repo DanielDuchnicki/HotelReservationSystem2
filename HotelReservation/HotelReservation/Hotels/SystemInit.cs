@@ -3,9 +3,9 @@ using HotelReservation.ReservationSteps;
 
 namespace HotelReservation.Hotels
 {
-    public class SystemInit
+    internal class SystemInit
     {
-        public void AddHotels(HotelSystem hotelSystem)
+        internal void AddHotels(HotelSystem hotelSystem)
         {
             var firstHotelReservationSteps = new List<ReservationStepType>()
             {

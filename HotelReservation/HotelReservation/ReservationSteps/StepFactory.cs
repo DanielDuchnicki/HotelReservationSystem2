@@ -6,10 +6,10 @@ using HotelReservation.ReservationSteps.Payment;
 
 namespace HotelReservation.ReservationSteps
 {
-    public class StepFactory
+    internal class StepFactory
     {
         private readonly Dictionary<ReservationStepType, Func<IReservationStep>> _reservationStepsInstances;
-        public StepFactory()
+        internal StepFactory()
         {
             _reservationStepsInstances = new Dictionary<ReservationStepType, Func<IReservationStep>>
                 {
@@ -19,7 +19,7 @@ namespace HotelReservation.ReservationSteps
                 };
         }
 
-        public virtual IReservationStep CreateInstance(ReservationStepType reservationStep)
+        internal virtual IReservationStep CreateInstance(ReservationStepType reservationStep)
         {
             Func<IReservationStep> instance;
             if (!_reservationStepsInstances.TryGetValue(reservationStep, out instance))

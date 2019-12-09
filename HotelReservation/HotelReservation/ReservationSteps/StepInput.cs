@@ -7,7 +7,7 @@ namespace HotelReservation.ReservationSteps
         public InputType Identifier { get; private set; }
         public string Value { get; private set; }
 
-        public StepInput(InputType identifier)
+        internal StepInput(InputType identifier)
         {
             Identifier = identifier;
             Value = null;

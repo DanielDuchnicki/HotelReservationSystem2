@@ -2,9 +2,9 @@
 
 namespace HotelReservation.ReservationSteps
 {
-    public class StepsExecutor
+    internal class StepsExecutor
     {
-        public virtual void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsData)
+        internal virtual void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsData)
         {
             foreach (var reservationStep in reservationSteps)
             {

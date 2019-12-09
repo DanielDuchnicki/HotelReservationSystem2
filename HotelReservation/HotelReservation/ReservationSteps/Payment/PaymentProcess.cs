@@ -2,11 +2,11 @@
 
 namespace HotelReservation.ReservationSteps.Payment
 {
-    public class PaymentProcess : IReservationStep
+    internal class PaymentProcess : IReservationStep
     {
         private ConsolePrinter _consolePrinter;
-        public List<StepInput> stepInputs;
-        public PaymentProcess(ConsolePrinter consolePrinter)
+        private List<StepInput> stepInputs;
+        internal PaymentProcess(ConsolePrinter consolePrinter)
         {
             _consolePrinter = consolePrinter;
             stepInputs = new List<StepInput>();

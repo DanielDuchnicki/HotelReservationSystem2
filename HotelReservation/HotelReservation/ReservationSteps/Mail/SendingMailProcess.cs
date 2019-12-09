@@ -2,13 +2,13 @@
 
 namespace HotelReservation.ReservationSteps.Mail
 {
-    public class SendingMailProcess : IReservationStep
+    internal class SendingMailProcess : IReservationStep
     {
         private ConsolePrinter _consolePrinter;
         private StepInput name = new StepInput(InputType.Name);
         private StepInput email = new StepInput(InputType.EmailAddress);
         private List<StepInput> stepInputs;
-        public SendingMailProcess(ConsolePrinter consolePrinter)
+        internal SendingMailProcess(ConsolePrinter consolePrinter)
         {
             _consolePrinter = consolePrinter;
             stepInputs = new List<StepInput> { name, email };

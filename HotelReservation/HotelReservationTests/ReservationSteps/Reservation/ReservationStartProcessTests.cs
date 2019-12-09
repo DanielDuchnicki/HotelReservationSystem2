@@ -5,7 +5,6 @@ using FluentAssertions;
 using NUnit.Framework;
 using HotelReservation.ReservationSteps;
 using System.Collections.Generic;
-using System.Net.Mail;
 using System;
 
 namespace HotelReservationTests.ReservationSteps.Reservation
