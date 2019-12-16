@@ -31,7 +31,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         {
             var stepInputs = new List<StepInput> { _name, _email };
 
-            _subject.GetStepInputs().Should().BeEquivalentTo(stepInputs);
+            _subject.GetRequiredStepInputs().Should().BeEquivalentTo(stepInputs);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         {
             const string nameValue = "Test value";
 
-            _name.SetValue(nameValue);
+            _name.Value = nameValue;
 
             _subject.Execute(new List<StepInput> { _name });
 

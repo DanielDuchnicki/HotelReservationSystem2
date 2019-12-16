@@ -71,7 +71,7 @@ namespace HotelReservationTests
 
             _subject.GetStepsInputs(new List<IReservationStep> { reservationStepDouble });
 
-            A.CallTo(() => reservationStepDouble.GetStepInputs()).MustHaveHappened();
+            A.CallTo(() => reservationStepDouble.GetRequiredStepInputs()).MustHaveHappened();
         }
 
         [Test]

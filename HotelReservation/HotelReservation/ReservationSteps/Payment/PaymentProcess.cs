@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HotelReservation.ReservationSteps.Payment
 {
     internal class PaymentProcess : IReservationStep
     {
         private ConsolePrinter _consolePrinter;
-        private List<StepInput> stepInputs;
+        private List<InputType> _requiredInputTypes = new List<InputType>();
+
         public PaymentProcess(ConsolePrinter consolePrinter)
         {
             _consolePrinter = consolePrinter;
-            stepInputs = new List<StepInput>();
         }
-        public List<StepInput> GetStepInputs()
-        {
-            return stepInputs;
-        }
+
+        public List<StepInput> GetRequiredStepInputs() => _requiredInputTypes.Select(type => new StepInput(type)).ToList();
+
         public virtual void Execute(List<StepInput> stepInputs)
         {
             _consolePrinter.Write("----==== PAYMENT PROCESS ====----");

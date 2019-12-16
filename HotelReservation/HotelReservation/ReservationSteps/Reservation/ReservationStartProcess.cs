@@ -1,32 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HotelReservation.ReservationSteps.Reservation
 {
     internal class ReservationStartProcess : IReservationStep
     {
         private ConsolePrinter _consolePrinter;
-        private StepInput name = new StepInput(InputType.Name);
-        private StepInput email = new StepInput(InputType.EmailAddress);
-        private List<StepInput> stepInputs;
+        private List<InputType> _requiredInputTypes = new List<InputType> { InputType.Name, InputType.EmailAddress };
 
         public ReservationStartProcess(ConsolePrinter consolePrinter)
         {
             _consolePrinter = consolePrinter;
-            stepInputs = new List<StepInput>{ name, email };
         }
 
-        public List<StepInput> GetStepInputs()
-        {
-            return stepInputs;
-        }
+        public List<StepInput> GetRequiredStepInputs() => _requiredInputTypes.Select(type => new StepInput(type)).ToList();
 
         public virtual void Execute(List<StepInput> stepInputs)
         {
             string nameInput;
             try
             {
-                nameInput = stepInputs.Find(stepInputData => stepInputData.Identifier == name.Identifier).Value;
+                nameInput = stepInputs.Find(stepInputData => stepInputData.Type == InputType.Name).Value;
             }
             catch (NullReferenceException)
             {

@@ -2,18 +2,12 @@
 {
     public class StepInput
     {
-        public InputType Identifier { get; private set; }
-        public string Value { get; private set; }
+        public InputType Type { get; private set; }
+        public string Value { get; set; } = null;
 
-        internal StepInput(InputType identifier)
+        internal StepInput(InputType type)
         {
-            Identifier = identifier;
-            Value = null;
-        }
-
-        public void SetValue(string value)
-        {
-            Value = value;
+            Type = type;
         }
     }
 }

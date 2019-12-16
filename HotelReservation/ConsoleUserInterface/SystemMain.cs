@@ -44,8 +44,8 @@ namespace ConsoleUserInterface
             var stepInputsValues = new List<StepInput>();
             foreach (var stepInput in stepInputs)
             {
-                Console.WriteLine("Please provide your " + stepInput.Identifier + ": ");
-                stepInput.SetValue(Console.ReadLine());
+                Console.WriteLine("Please provide your " + stepInput.Type + ": ");
+                stepInput.Value = Console.ReadLine();
                 stepInputsValues.Add(stepInput);
             }
             return stepInputsValues;

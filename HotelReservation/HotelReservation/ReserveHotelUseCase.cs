@@ -55,8 +55,8 @@ namespace HotelReservation
             List<StepInput> stepInputs = new List<StepInput>();
             foreach (var reservationStep in reservationSteps)
             {
-                stepInputs.AddRange(reservationStep.GetStepInputs().
-                    Where(stepInputsList => stepInputs.FirstOrDefault(stepInput => stepInput.Identifier == stepInputsList.Identifier) == null));
+                stepInputs.AddRange(reservationStep.GetRequiredStepInputs().
+                    Where(stepInputsList => stepInputs.FirstOrDefault(stepInput => stepInput.Type == stepInputsList.Type) == null));
             }
             return new ReadOnlyCollection<StepInput>(stepInputs);
         }
