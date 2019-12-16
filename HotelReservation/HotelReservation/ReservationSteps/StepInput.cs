@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace HotelReservation.ReservationSteps
+﻿namespace HotelReservation.ReservationSteps
 {
     public class StepInput
     {

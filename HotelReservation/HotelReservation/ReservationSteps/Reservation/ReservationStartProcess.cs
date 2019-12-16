@@ -10,7 +10,7 @@ namespace HotelReservation.ReservationSteps.Reservation
         private StepInput email = new StepInput(InputType.EmailAddress);
         private List<StepInput> stepInputs;
 
-        internal ReservationStartProcess(ConsolePrinter consolePrinter)
+        public ReservationStartProcess(ConsolePrinter consolePrinter)
         {
             _consolePrinter = consolePrinter;
             stepInputs = new List<StepInput>{ name, email };

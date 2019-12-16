@@ -5,8 +5,8 @@ namespace HotelReservation.Hotels
 {
     public class Hotel
     {
-        public int? HotelId { get; private set; }
-        internal List<ReservationStepType> ReservationSteps { get; private set; }
+        public int? HotelId { get; }
+        internal List<ReservationStepType> ReservationSteps { get; }
 
         internal Hotel(int? hotelId, List<ReservationStepType> reservationSteps)
         {

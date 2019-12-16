@@ -5,7 +5,7 @@ namespace HotelReservation.Hotels
 {
     internal class SystemInit
     {
-        internal void AddHotels(HotelSystem hotelSystem)
+        public void AddHotels(HotelSystem hotelSystem)
         {
             var firstHotelReservationSteps = new List<ReservationStepType>()
             {

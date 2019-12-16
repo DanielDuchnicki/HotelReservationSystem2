@@ -10,19 +10,19 @@ namespace HotelReservation.Hotels
         private readonly List<Hotel> _hotels = new List<Hotel>();
         internal int? LastHotelId { get; private set; } = null;
 
-        internal void AddNewHotel(List<ReservationStepType> hotelReservationSteps)
+        public void AddNewHotel(List<ReservationStepType> hotelReservationSteps)
         {
             LastHotelId = (LastHotelId == null) ? 1 : ++LastHotelId;
             var newHotel = new Hotel(LastHotelId, hotelReservationSteps);
             _hotels.Add(newHotel);
         }
 
-        internal virtual ReadOnlyCollection<Hotel> GetHotels()
+        public virtual ReadOnlyCollection<Hotel> GetHotels()
         {
             return new ReadOnlyCollection<Hotel>(_hotels);
         }
 
-        internal virtual List<ReservationStepType> GetHotelReservationSteps(int hotelId)
+        public virtual List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             try
             {

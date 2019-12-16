@@ -9,7 +9,7 @@ namespace HotelReservation.ReservationSteps
     internal class StepFactory
     {
         private readonly Dictionary<ReservationStepType, Func<IReservationStep>> _reservationStepsInstances;
-        internal StepFactory()
+        public StepFactory()
         {
             _reservationStepsInstances = new Dictionary<ReservationStepType, Func<IReservationStep>>
                 {
@@ -19,7 +19,7 @@ namespace HotelReservation.ReservationSteps
                 };
         }
 
-        internal virtual IReservationStep CreateInstance(ReservationStepType reservationStep)
+        public virtual IReservationStep CreateInstance(ReservationStepType reservationStep)
         {
             Func<IReservationStep> instance;
             if (!_reservationStepsInstances.TryGetValue(reservationStep, out instance))
