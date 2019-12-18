@@ -67,7 +67,7 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        reserveHotelUsecase.ExecuteStepsForHotelId(hotelId, GatherStepInputsValues(reserveHotelUsecase.GetRequiredStepInputsForHotelId(hotelId)));
+                        reserveHotelUsecase.ReserveHotel(hotelId, GatherStepInputsValues(reserveHotelUsecase.GetRequiredStepInputsForHotelId(hotelId)));
                     }
                     catch (Exception ex)
                     {

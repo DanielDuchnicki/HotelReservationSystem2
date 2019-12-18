@@ -21,12 +21,12 @@ namespace HotelReservation.ReservationSteps
 
         public virtual IReservationStep CreateInstance(ReservationStepType reservationStep)
         {
-            Func<IReservationStep> instance;
-            if (!_reservationStepsInstances.TryGetValue(reservationStep, out instance))
+            Func<IReservationStep> instanceBuilder;
+            if (!_reservationStepsInstances.TryGetValue(reservationStep, out instanceBuilder))
             {
                 throw new NotImplementedException("There is no implementation of IReservationStep interface for given Reservation Step Type");
             }
-            return instance();
+            return instanceBuilder();
         }
     }
 }

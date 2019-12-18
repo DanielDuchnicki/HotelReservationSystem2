@@ -50,22 +50,17 @@ namespace HotelReservation
             return reservationSteps;
         }
 
-        internal ReadOnlyCollection<StepInput> GetStepsInputs(List<IReservationStep> reservationSteps)
+        internal ReadOnlyCollection<StepInput> GetRequiredStepsInputs(List<IReservationStep> reservationSteps)
         {
-            List<StepInput> stepInputs = new List<StepInput>();
-            foreach (var reservationStep in reservationSteps)
-            {
-                stepInputs.AddRange(reservationStep.GetRequiredStepInputs().
-                    Where(stepInputsList => stepInputs.FirstOrDefault(stepInput => stepInput.Type == stepInputsList.Type) == null));
-            }
-            return new ReadOnlyCollection<StepInput>(stepInputs);
+            return new ReadOnlyCollection<StepInput>(reservationSteps.SelectMany(step => step.GetRequiredStepInputs())
+                .GroupBy(step => step.Type).Select(grouping => grouping.First()).ToList());
         }
 
         public ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
             var reservationSteps = CreateStepsInstances(reservationStepTypes);
-            return GetStepsInputs(reservationSteps);
+            return GetRequiredStepsInputs(reservationSteps);
         }
 
         internal void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
@@ -73,7 +68,7 @@ namespace HotelReservation
             _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
         }
 
-        public void ExecuteStepsForHotelId(int hotelId, List<StepInput> stepsInputs)
+        public void ReserveHotel(int hotelId, List<StepInput> stepsInputs)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
             var reservationSteps = CreateStepsInstances(reservationStepTypes);
