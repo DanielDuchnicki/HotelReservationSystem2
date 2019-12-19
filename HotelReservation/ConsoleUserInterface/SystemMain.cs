@@ -9,7 +9,7 @@ namespace ConsoleUserInterface
 {
     public class SystemMain
     {
-        public static void DisplayMenu()
+        private static void DisplayMenu()
         {
             Console.WriteLine("\n----==== RESERVATION SYSTEM ====----");
             Console.WriteLine("1 - Start new reservation\n");
@@ -17,7 +17,7 @@ namespace ConsoleUserInterface
             Console.WriteLine("Choose, what you want to do:");
         }
 
-        public static void DisplayHotels(ReadOnlyCollection<Hotel> hotels)
+        private static void DisplayHotels(ReadOnlyCollection<Hotel> hotels)
         {
             if (hotels.Count == 0)
                 Console.WriteLine("There are no hotels added to the reservation system.");
@@ -31,7 +31,7 @@ namespace ConsoleUserInterface
             }
             Console.WriteLine();
         }
-        public static int SelectHotel()
+        private static int SelectHotel()
         {
             Console.WriteLine("Please check list of hotels and choose one for you!");
             Console.WriteLine("Please provide hotel ID:\n");
@@ -39,7 +39,7 @@ namespace ConsoleUserInterface
             return !int.TryParse(Console.ReadLine(), out parsedHotelId) ? 0 : parsedHotelId;
         }
 
-        public static List<StepInput> GatherStepInputsValues(ReadOnlyCollection<StepInput> stepInputs)
+        private static List<StepInput> GatherStepInputsValues(ReadOnlyCollection<StepInput> stepInputs)
         {
             var stepInputsValues = new List<StepInput>();
             foreach (var stepInput in stepInputs)
@@ -51,7 +51,7 @@ namespace ConsoleUserInterface
             return stepInputsValues;
         }
 
-        public static int Menu(UseCaseFactory useCaseFactory)
+        private static int Menu(UseCaseFactory useCaseFactory)
         {
             DisplayMenu();
             var choice = Console.ReadLine();

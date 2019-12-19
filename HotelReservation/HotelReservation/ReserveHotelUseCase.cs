@@ -17,6 +17,13 @@ namespace HotelReservation
             _stepExecutor = stepExecutor;
         }
 
+        public override void ReserveHotel(int hotelId, List<StepInput> stepsInputs)
+        {
+            var reservationStepTypes = GetHotelReservationSteps(hotelId);
+            var reservationSteps = CreateStepsInstances(reservationStepTypes);
+            ExecuteSteps(reservationSteps, stepsInputs);
+        }
+
         internal List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             return _hotelSystem.GetHotelReservationSteps(hotelId);
@@ -35,13 +42,6 @@ namespace HotelReservation
         internal void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
         {
             _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
-        }
-
-        public override void ReserveHotel(int hotelId, List<StepInput> stepsInputs)
-        {
-            var reservationStepTypes = GetHotelReservationSteps(hotelId);
-            var reservationSteps = CreateStepsInstances(reservationStepTypes);
-            ExecuteSteps(reservationSteps, stepsInputs);
         }
     }
 }

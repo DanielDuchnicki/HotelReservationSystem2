@@ -17,6 +17,13 @@ namespace HotelReservation
             _stepFactory = stepFactory;
         }
 
+        public override ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
+        {
+            var reservationStepTypes = GetHotelReservationSteps(hotelId);
+            var reservationSteps = CreateStepsInstances(reservationStepTypes);
+            return GetRequiredStepsInputs(reservationSteps);
+        }
+
         internal List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             return _hotelSystem.GetHotelReservationSteps(hotelId);
@@ -37,13 +44,5 @@ namespace HotelReservation
             return new ReadOnlyCollection<StepInput>(reservationSteps.SelectMany(step => step.GetRequiredStepInputs())
                 .GroupBy(step => step.Type).Select(grouping => grouping.First()).ToList());
         }
-
-        public override ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
-        {
-            var reservationStepTypes = GetHotelReservationSteps(hotelId);
-            var reservationSteps = CreateStepsInstances(reservationStepTypes);
-            return GetRequiredStepsInputs(reservationSteps);
-        }
-
     }
 }
