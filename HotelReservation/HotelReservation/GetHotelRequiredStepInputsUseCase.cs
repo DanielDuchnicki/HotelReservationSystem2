@@ -1,20 +1,20 @@
-﻿using HotelReservation.ReservationSteps;
-using HotelReservation.Hotels;
+﻿using HotelReservation.Hotels;
+using HotelReservation.ReservationSteps;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace HotelReservation
 {
-    public class ReserveHotelUsecase : UseCase
+    public class GetHotelRequiredStepInputsUseCase : UseCase
     {
         private HotelSystem _hotelSystem;
         private StepFactory _stepFactory;
-        private StepsExecutor _stepExecutor;
 
-        internal ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory, StepsExecutor stepExecutor)
+        internal GetHotelRequiredStepInputsUseCase(HotelSystem hotelSystem, StepFactory stepFactory)
         {
             _hotelSystem = hotelSystem;
             _stepFactory = stepFactory;
-            _stepExecutor = stepExecutor;
         }
 
         internal List<ReservationStepType> GetHotelReservationSteps(int hotelId)
@@ -32,16 +32,18 @@ namespace HotelReservation
             return reservationSteps;
         }
 
-        internal void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
+        internal ReadOnlyCollection<StepInput> GetRequiredStepsInputs(List<IReservationStep> reservationSteps)
         {
-            _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
+            return new ReadOnlyCollection<StepInput>(reservationSteps.SelectMany(step => step.GetRequiredStepInputs())
+                .GroupBy(step => step.Type).Select(grouping => grouping.First()).ToList());
         }
 
-        public override void ReserveHotel(int hotelId, List<StepInput> stepsInputs)
+        public override ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
             var reservationSteps = CreateStepsInstances(reservationStepTypes);
-            ExecuteSteps(reservationSteps, stepsInputs);
+            return GetRequiredStepsInputs(reservationSteps);
         }
+
     }
 }

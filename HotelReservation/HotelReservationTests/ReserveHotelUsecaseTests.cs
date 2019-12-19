@@ -25,14 +25,6 @@ namespace HotelReservationTests
         }
 
         [Test]
-        public void ShouldRetrieveAvailableHotels()
-        {
-            _subject.GetHotels();
-
-            A.CallTo(() => _hotelSystemDouble.GetHotels()).MustHaveHappened();
-        }
-
-        [Test]
         public void ShouldRetrieveHotelReservationSteps()
         {
             var dummyHotelId = 1;
@@ -62,16 +54,6 @@ namespace HotelReservationTests
 
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[0])).MustHaveHappened();
             A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[1])).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldRetrieveRequiredStepInputs()
-        {
-            IReservationStep reservationStepDouble = A.Fake<IReservationStep>();
-
-            _subject.GetRequiredStepsInputs(new List<IReservationStep> { reservationStepDouble });
-
-            A.CallTo(() => reservationStepDouble.GetRequiredStepInputs()).MustHaveHappened();
         }
 
         [Test]

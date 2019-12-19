@@ -65,6 +65,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="GetHotelRequiredStepInputsUseCaseTests.cs" />
+    <Compile Include="GetHotelsUseCaseTests.cs" />
     <Compile Include="Hotels\HotelTests.cs" />
     <Compile Include="Hotels\HotelSystemTests.cs" />
     <Compile Include="Hotels\SystemInitTests.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="ReservationSteps\StepFactoryTests.cs" />
     <Compile Include="ReservationSteps\StepsExecutorTests.cs" />
     <Compile Include="ReserveHotelUsecaseTests.cs" />
+    <Compile Include="UseCaseFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

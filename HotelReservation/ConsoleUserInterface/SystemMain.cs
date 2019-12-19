@@ -51,7 +51,7 @@ namespace ConsoleUserInterface
             return stepInputsValues;
         }
 
-        public static int Menu(ReserveHotelUsecase reserveHotelUsecase)
+        public static int Menu(UseCaseFactory useCaseFactory)
         {
             DisplayMenu();
             var choice = Console.ReadLine();
@@ -62,12 +62,13 @@ namespace ConsoleUserInterface
                     break;
                 case "1":
                     Console.Clear();
-                    DisplayHotels(reserveHotelUsecase.GetHotels());
+                    DisplayHotels(useCaseFactory.CreateInstance(UseCaseType.GetHotels).GetHotels());
                     var hotelId = SelectHotel();
                     Console.Clear();
                     try
                     {
-                        reserveHotelUsecase.ReserveHotel(hotelId, GatherStepInputsValues(reserveHotelUsecase.GetRequiredStepInputsForHotelId(hotelId)));
+                        useCaseFactory.CreateInstance(UseCaseType.ReserveHotel).ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
+                            .CreateInstance(UseCaseType.GetHotelRequiredStepInputs).GetRequiredStepInputsForHotelId(hotelId)));
                     }
                     catch (Exception ex)
                     {
@@ -88,7 +89,7 @@ namespace ConsoleUserInterface
             int choice;
             do
             {
-                choice = Menu(new ReserveHotelUsecase());
+                choice = Menu(new UseCaseFactory());
             } while (choice != 0);
         }
     }
