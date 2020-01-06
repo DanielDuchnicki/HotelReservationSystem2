@@ -4,6 +4,7 @@ using FakeItEasy;
 using System.Collections.Generic;
 using HotelReservation;
 using HotelReservation.ReservationSteps;
+using HotelReservation.ReservationSteps.Reservation;
 
 namespace HotelReservationTests
 {
@@ -68,6 +69,45 @@ namespace HotelReservationTests
             _subject.ExecuteSteps(reservationStepsDouble, stepInputsDouble);
 
             A.CallTo(() => _stepExecutorDouble.ExecuteSteps(reservationStepsDouble, stepInputsDouble)).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldReserveHotelGetHotelReservationSteps()
+        {
+            var dummyHotelId = 1;
+            var stepInputsDouble = new List<StepInput>();
+
+            _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
+
+            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(dummyHotelId)).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldCreateStepsForProvidedHotelId()
+        {
+            var dummyHotelId = 1;
+            var stepInputsDouble = new List<StepInput>();
+
+            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1)}));
+
+            _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
+
+            A.CallTo(() => _stepFactoryDouble.CreateInstance((ReservationStepType)(-1))).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldExecuteStepsForProvidedHotelId()
+        {
+            var dummyHotelId = 1;
+            var stepInputsDouble = new List<StepInput> { A.Fake<StepInput>() };
+            var stepDouble = new ReservationStartProcess(A.Fake<ConsolePrinter>());
+
+            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1) }));
+            A.CallTo(() => _stepFactoryDouble.CreateInstance(A<ReservationStepType>._)).Returns(stepDouble);
+
+            _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
+
+            A.CallTo(() => _stepExecutorDouble.ExecuteSteps(new List<IReservationStep> { stepDouble }, stepInputsDouble)).WithAnyArguments().MustHaveHappened();
         }
     }
 }
