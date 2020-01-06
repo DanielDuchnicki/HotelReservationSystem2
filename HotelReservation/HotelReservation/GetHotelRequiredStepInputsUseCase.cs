@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace HotelReservation
 {
-    public class GetHotelRequiredStepInputsUseCase : UseCase
+    public class GetHotelRequiredStepInputsUseCase
     {
         private HotelSystem _hotelSystem;
         private StepFactory _stepFactory;
@@ -17,7 +17,7 @@ namespace HotelReservation
             _stepFactory = stepFactory;
         }
 
-        public override ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
+        public ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
             var reservationSteps = CreateStepsInstances(reservationStepTypes);

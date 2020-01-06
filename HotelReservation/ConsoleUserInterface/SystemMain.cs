@@ -62,13 +62,13 @@ namespace ConsoleUserInterface
                     break;
                 case "1":
                     Console.Clear();
-                    DisplayHotels(useCaseFactory.CreateInstance(UseCaseType.GetHotels).GetHotels());
+                    DisplayHotels(useCaseFactory.CreateGetHotelsUseCase().GetHotels());
                     var hotelId = SelectHotel();
                     Console.Clear();
                     try
                     {
-                        useCaseFactory.CreateInstance(UseCaseType.ReserveHotel).ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
-                            .CreateInstance(UseCaseType.GetHotelRequiredStepInputs).GetRequiredStepInputsForHotelId(hotelId)));
+                        useCaseFactory.CreateReserveHotelUsecase().ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
+                            .CreateGetHotelRequiredStepInputsUseCase().GetRequiredStepInputsForHotelId(hotelId)));
                     }
                     catch (Exception ex)
                     {

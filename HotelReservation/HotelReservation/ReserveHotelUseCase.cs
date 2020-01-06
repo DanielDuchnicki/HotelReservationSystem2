@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace HotelReservation
 {
-    public class ReserveHotelUsecase : UseCase
+    public class ReserveHotelUsecase
     {
         private HotelSystem _hotelSystem;
         private StepFactory _stepFactory;
@@ -17,7 +17,7 @@ namespace HotelReservation
             _stepExecutor = stepExecutor;
         }
 
-        public override void ReserveHotel(int hotelId, List<StepInput> stepsInputs)
+        public void ReserveHotel(int hotelId, List<StepInput> stepsInputs)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
             var reservationSteps = CreateStepsInstances(reservationStepTypes);

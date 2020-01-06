@@ -19,26 +19,19 @@ namespace HotelReservationTests
         [Test]
         public void ShouldCreateGetHotelsUseCaseInstance()
         {
-            _subject.CreateInstance(UseCaseType.GetHotels).Should().BeOfType(typeof(GetHotelsUseCase));
+            _subject.CreateGetHotelsUseCase().Should().BeOfType(typeof(GetHotelsUseCase));
         }
 
         [Test]
         public void ShouldCreateGetHotelRequiredStepInputsUseCaseInstance()
         {
-            _subject.CreateInstance(UseCaseType.GetHotelRequiredStepInputs).Should().BeOfType(typeof(GetHotelRequiredStepInputsUseCase));
+            _subject.CreateGetHotelRequiredStepInputsUseCase().Should().BeOfType(typeof(GetHotelRequiredStepInputsUseCase));
         }
 
         [Test]
         public void ShouldCreateReserveHotelUseCaseInstance()
         {
-            _subject.CreateInstance(UseCaseType.ReserveHotel).Should().BeOfType(typeof(ReserveHotelUsecase));
-        }
-
-        [Test]
-        public void ShouldThrowExceptionForNotValidReservationStep()
-        {
-            Action act = () => _subject.CreateInstance((UseCaseType)(-1));
-            act.Should().Throw<NotImplementedException>().WithMessage("There is no implementation of UseCase class for given UseCase Type");
+            _subject.CreateReserveHotelUsecase().Should().BeOfType(typeof(ReserveHotelUsecase));
         }
     }
 }

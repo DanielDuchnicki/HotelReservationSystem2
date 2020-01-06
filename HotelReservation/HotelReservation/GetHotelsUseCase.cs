@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace HotelReservation
 {
-    public class GetHotelsUseCase : UseCase
+    public class GetHotelsUseCase
     {
         private HotelSystem _hotelSystem;
 
@@ -12,7 +12,7 @@ namespace HotelReservation
             _hotelSystem = hotelSystem;
         }
 
-        public override ReadOnlyCollection<Hotel> GetHotels()
+        public ReadOnlyCollection<Hotel> GetHotels()
         {
             return _hotelSystem.GetHotels();
         }
