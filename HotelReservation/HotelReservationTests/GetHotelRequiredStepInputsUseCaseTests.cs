@@ -41,5 +41,27 @@ namespace HotelReservationTests
 
             A.CallTo(() => reservationStepDouble.GetRequiredStepInputs()).MustHaveHappened();
         }
+
+        [Test]
+        public void ShouldRetrieveHotelReservationStepsForProvidedHotelId()
+        {
+            var dummyHotelId = 1;
+
+            _subject.GetRequiredStepInputsForHotelId(dummyHotelId);
+
+            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(dummyHotelId)).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldCreateStepsForProvidedHotelId()
+        {
+            var dummyHotelId = 1;
+
+            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1) }));
+
+            _subject.GetRequiredStepInputsForHotelId(dummyHotelId);
+
+            A.CallTo(() => _stepFactoryDouble.CreateInstance((ReservationStepType)(-1))).MustHaveHappened();
+        }
     }
 }
