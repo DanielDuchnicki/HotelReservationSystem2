@@ -43,17 +43,24 @@ namespace HotelReservationTests.ReservationSteps.Mail
         }
 
         [Test]
-        public void ShouldCallConsolePrinterWithProvidedArgument()
+        public void ShouldCallConsolePrinterWithProvidedNameValue()
         {
             const string nameValue = "Test name value";
-            const string mailValue = "Test mail value";
-
             _name.Value = nameValue;
-            _mail.Value = mailValue;
 
             _subject.Execute(new List<StepInput> { _name, _mail });
 
             A.CallTo(() => _consolePrinterDouble.Write(nameValue)).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldCallConsolePrinterWithProvidedMailValue()
+        {
+            const string mailValue = "Test mail value";
+            _mail.Value = mailValue;
+
+            _subject.Execute(new List<StepInput> { _name, _mail });
+
             A.CallTo(() => _consolePrinterDouble.Write(mailValue)).MustHaveHappened();
         }
 
