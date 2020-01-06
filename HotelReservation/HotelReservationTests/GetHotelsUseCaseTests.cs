@@ -3,7 +3,8 @@ using NUnit.Framework;
 using FakeItEasy;
 using System.Collections.Generic;
 using HotelReservation;
-using HotelReservation.ReservationSteps;
+using System.Collections.ObjectModel;
+using FluentAssertions;
 
 namespace HotelReservationTests
 {
@@ -25,6 +26,15 @@ namespace HotelReservationTests
             _subject.GetHotels();
 
             A.CallTo(() => _hotelSystemDouble.GetHotels()).MustHaveHappened();
+        }
+
+        [Test]
+        public void ShouldReturnCurrentHotelsInHotelSystem()
+        {
+            var dummyHotels = new ReadOnlyCollection<Hotel>(new List<Hotel>());
+            A.CallTo(() => _hotelSystemDouble.GetHotels()).Returns(dummyHotels);
+
+            _subject.GetHotels().Should().Equals(dummyHotels);
         }
     }
 }
