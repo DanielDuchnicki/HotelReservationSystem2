@@ -24,14 +24,14 @@ namespace HotelReservation
             return GetRequiredStepsInputs(reservationSteps);
         }
 
-        internal List<ReservationStepType> GetHotelReservationSteps(int hotelId)
+        private List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             return _hotelSystem.GetHotelReservationSteps(hotelId);
         }
 
-        internal List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
+        private List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
         {
-            List<IReservationStep> reservationSteps = new List<IReservationStep>();
+            var reservationSteps = new List<IReservationStep>();
             foreach (var reservationStepType in reservationStepTypes)
             {
                 reservationSteps.Add(_stepFactory.CreateInstance(reservationStepType));
@@ -39,7 +39,7 @@ namespace HotelReservation
             return reservationSteps;
         }
 
-        internal ReadOnlyCollection<StepInput> GetRequiredStepsInputs(List<IReservationStep> reservationSteps)
+        private ReadOnlyCollection<StepInput> GetRequiredStepsInputs(List<IReservationStep> reservationSteps)
         {
             return new ReadOnlyCollection<StepInput>(reservationSteps.SelectMany(step => step.GetRequiredStepInputs())
                 .GroupBy(step => step.Type).Select(grouping => grouping.First()).ToList());

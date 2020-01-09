@@ -24,14 +24,14 @@ namespace HotelReservation
             ExecuteSteps(reservationSteps, stepsInputs);
         }
 
-        internal List<ReservationStepType> GetHotelReservationSteps(int hotelId)
+        private List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             return _hotelSystem.GetHotelReservationSteps(hotelId);
         }
 
-        internal List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
+        private List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
         {
-            List<IReservationStep> reservationSteps = new List<IReservationStep>();
+            var reservationSteps = new List<IReservationStep>();
             foreach (var reservationStepType in reservationStepTypes)
             {
                 reservationSteps.Add(_stepFactory.CreateInstance(reservationStepType));
@@ -39,7 +39,7 @@ namespace HotelReservation
             return reservationSteps;
         }
 
-        internal void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
+        private void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
         {
             _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
         }
