@@ -4,17 +4,16 @@ using FakeItEasy;
 using System.Collections.Generic;
 using HotelReservation;
 using HotelReservation.ReservationSteps;
-using HotelReservation.ReservationSteps.Reservation;
 
 namespace HotelReservationTests
 {
     [TestFixture]
-    class ReserveHotelUsecaseTests
+    public class ReserveHotelUsecaseTests
     {
-        ReserveHotelUsecase _subject;
-        HotelSystem _hotelSystemDouble;
-        StepFactory _stepFactoryDouble;
-        StepsExecutor _stepExecutorDouble;
+        private ReserveHotelUsecase _subject;
+        private HotelSystem _hotelSystemDouble;
+        private StepFactory _stepFactoryDouble;
+        private StepsExecutor _stepExecutorDouble;
 
         [SetUp]
         public void BeforeTest()
@@ -23,52 +22,6 @@ namespace HotelReservationTests
             _stepFactoryDouble = A.Fake<StepFactory>();
             _stepExecutorDouble = A.Fake<StepsExecutor>();
             _subject = new ReserveHotelUsecase(_hotelSystemDouble, _stepFactoryDouble, _stepExecutorDouble);
-        }
-
-        [Test]
-        public void ShouldRetrieveHotelReservationSteps()
-        {
-            var dummyHotelId = 1;
-
-            _subject.GetHotelReservationSteps(dummyHotelId);
-
-            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(dummyHotelId)).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldCreateStepBasedOnProvidedType()
-        {
-            var providedType = ReservationStepType.PaymentProcess;
-
-            _subject.CreateStepsInstances(new List<ReservationStepType> { providedType });
-
-            A.CallTo(() => _stepFactoryDouble.CreateInstance(providedType)).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldCreateStepsBasedOnProvidedListOfStepsTypes()
-        {
-            var providedListOfTypes = new List<ReservationStepType> {
-                ReservationStepType.PaymentProcess, ReservationStepType.SendingMailProcess };
-
-            _subject.CreateStepsInstances(providedListOfTypes);
-
-            A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[0])).MustHaveHappened();
-            A.CallTo(() => _stepFactoryDouble.CreateInstance(providedListOfTypes[1])).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldExecuteStepsForProvidedStepsListAndStepsInputs()
-        {
-            IReservationStep reservationStepDouble = A.Fake<IReservationStep>();
-            StepInput stepInputDouble = A.Fake<StepInput>();
-
-            List<IReservationStep> reservationStepsDouble = new List<IReservationStep> { reservationStepDouble };
-            List<StepInput> stepInputsDouble = new List<StepInput> { stepInputDouble };
-
-            _subject.ExecuteSteps(reservationStepsDouble, stepInputsDouble);
-
-            A.CallTo(() => _stepExecutorDouble.ExecuteSteps(reservationStepsDouble, stepInputsDouble)).MustHaveHappened();
         }
 
         [Test]
@@ -83,7 +36,7 @@ namespace HotelReservationTests
         }
 
         [Test]
-        public void ShouldCreateStepsForProvidedHotelId()
+        public void ShouldCreateStepForProvidedHotelId()
         {
             var dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput>();
@@ -96,18 +49,34 @@ namespace HotelReservationTests
         }
 
         [Test]
+        public void ShouldCreateRealStepsForProvidedHotelId()
+        {
+            var dummyHotelId = 1;
+            var stepInputsDouble = new List<StepInput>();
+
+            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).
+                Returns((new List<ReservationStepType> { ReservationStepType.PaymentProcess, ReservationStepType.ReservationProcess }));
+
+            _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
+
+            A.CallTo(() => _stepFactoryDouble.CreateInstance(ReservationStepType.PaymentProcess)).MustHaveHappened();
+            A.CallTo(() => _stepFactoryDouble.CreateInstance(ReservationStepType.ReservationProcess)).MustHaveHappened();
+        }
+
+        [Test]
         public void ShouldExecuteStepsForProvidedHotelId()
         {
             var dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput> { A.Fake<StepInput>() };
-            var stepDouble = new ReservationStartProcess(A.Fake<ConsolePrinter>());
+            var stepDouble = A.Fake<IReservationStep>();
 
             A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1) }));
             A.CallTo(() => _stepFactoryDouble.CreateInstance(A<ReservationStepType>._)).Returns(stepDouble);
 
             _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
 
-            A.CallTo(() => _stepExecutorDouble.ExecuteSteps(new List<IReservationStep> { stepDouble }, stepInputsDouble)).WithAnyArguments().MustHaveHappened();
+            A.CallTo(() => _stepExecutorDouble.ExecuteSteps(
+                A<List<IReservationStep>>.That.Matches(steps => steps.Contains(stepDouble)), stepInputsDouble)).MustHaveHappened();
         }
     }
 }

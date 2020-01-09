@@ -1,14 +1,13 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using HotelReservation;
 
 namespace HotelReservationTests
 {
     [TestFixture]
-    class UseCaseFactoryTests
+    public class UseCaseFactoryTests
     {
-        UseCaseFactory _subject;
+        private UseCaseFactory _subject;
 
         [SetUp]
         public void BeforeTest()

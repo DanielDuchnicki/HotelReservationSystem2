@@ -8,10 +8,11 @@ using FluentAssertions;
 
 namespace HotelReservationTests
 {
-    class GetHotelsUseCaseTests
+    [TestFixture]
+    public class GetHotelsUseCaseTests
     {
-        GetHotelsUseCase _subject;
-        HotelSystem _hotelSystemDouble;
+        private GetHotelsUseCase _subject;
+        private HotelSystem _hotelSystemDouble;
 
         [SetUp]
         public void BeforeTest()
