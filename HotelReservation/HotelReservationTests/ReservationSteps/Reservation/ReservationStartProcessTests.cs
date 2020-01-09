@@ -10,12 +10,12 @@ using System;
 namespace HotelReservationTests.ReservationSteps.Reservation
 {
     [TestFixture]
-    class ReservationStartProcessTests
+    public class ReservationStartProcessTests
     {
-        ReservationStartProcess _subject;
-        ConsolePrinter _consolePrinterDouble;
-        StepInput _name;
-        StepInput _email;
+        private ReservationStartProcess _subject;
+        private ConsolePrinter _consolePrinterDouble;
+        private StepInput _name;
+        private StepInput _email;
 
         [SetUp]
         public void BeforeTest()

@@ -10,7 +10,7 @@ using HotelReservation.ReservationSteps.Mail;
 namespace HotelReservationTests.ReservationSteps
 {
     [TestFixture]
-    class StepsExecutorTests
+    public class StepsExecutorTests
     {
         private StepsExecutor _subject;
         private List<StepInput> _stepInputList;

@@ -10,12 +10,12 @@ using System.Collections.Generic;
 namespace HotelReservationTests.ReservationSteps.Mail
 {
     [TestFixture]
-    class SendingMailProcessTests
+    public class SendingMailProcessTests
     {
-        SendingMailProcess _subject;
-        ConsolePrinter _consolePrinterDouble;
-        StepInput _name;
-        StepInput _mail;
+        private SendingMailProcess _subject;
+        private ConsolePrinter _consolePrinterDouble;
+        private StepInput _name;
+        private StepInput _mail;
 
         [SetUp]
         public void BeforeTest()

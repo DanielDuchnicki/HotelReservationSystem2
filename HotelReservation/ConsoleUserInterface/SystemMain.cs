@@ -86,7 +86,7 @@ namespace ConsoleUserInterface
         public static void Main()
         {
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
-            int choice;
+            var choice = -1;
             do
             {
                 choice = Menu(new UseCaseFactory());

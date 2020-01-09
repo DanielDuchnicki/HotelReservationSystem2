@@ -11,7 +11,7 @@ namespace HotelReservationTests.Hotels
     [TestFixture]
     public class HotelSystemTests
     {
-        HotelSystem _subject;
+        private HotelSystem _subject;
 
         [SetUp]
         public void BeforeTest()

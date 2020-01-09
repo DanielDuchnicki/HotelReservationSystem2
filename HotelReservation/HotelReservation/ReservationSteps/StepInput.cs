@@ -2,7 +2,7 @@
 {
     public class StepInput
     {
-        public InputType Type { get; private set; }
+        public InputType Type { get; }
         public string Value { get; set; } = null;
 
         internal StepInput(InputType type)

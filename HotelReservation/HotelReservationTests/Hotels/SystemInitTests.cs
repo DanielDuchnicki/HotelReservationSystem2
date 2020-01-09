@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace HotelReservationTests.Hotels
 {
     [TestFixture]
-    class SystemInitTests
+    public class SystemInitTests
     {
         [Test]
         public void ShouldAddThreeHotelsToHotelsList()
