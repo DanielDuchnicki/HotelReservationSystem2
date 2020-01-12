@@ -35,7 +35,7 @@ namespace HotelReservationTests.ReservationSteps
         }
 
         [Test]
-        public void ShouldExecuteReservationStartProcessStep()
+        public void ShouldExecuteRealStep()
         {
             var reservationStartProcessStepDouble = A.Fake<ReservationStartProcess>();
             A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).DoesNothing();
@@ -43,28 +43,6 @@ namespace HotelReservationTests.ReservationSteps
             _subject.ExecuteSteps(new List<IReservationStep> { reservationStartProcessStepDouble }, _stepInputList);
 
             A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldExecutePaymentProcessStep()
-        {
-            var PaymentProcessStepDouble = A.Fake<PaymentProcess>();
-            A.CallTo(() => PaymentProcessStepDouble.Execute(_stepInputList)).DoesNothing();
-
-            _subject.ExecuteSteps(new List<IReservationStep> { PaymentProcessStepDouble }, _stepInputList);
-
-            A.CallTo(() => PaymentProcessStepDouble.Execute(_stepInputList)).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldExecuteSendingMailStep()
-        {
-            var SendingMailProcessStepDouble = A.Fake<SendingMailProcess>();
-            A.CallTo(() => SendingMailProcessStepDouble.Execute(_stepInputList)).DoesNothing();
-
-            _subject.ExecuteSteps(new List<IReservationStep> { SendingMailProcessStepDouble }, _stepInputList);
-
-            A.CallTo(() => SendingMailProcessStepDouble.Execute(_stepInputList)).MustHaveHappened();
         }
 
         [Test]
