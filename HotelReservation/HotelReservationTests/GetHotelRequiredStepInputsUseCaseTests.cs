@@ -25,7 +25,7 @@ namespace HotelReservationTests
         [Test]
         public void ShouldRetrieveHotelReservationStepsForProvidedHotelId()
         {
-            var dummyHotelId = 1;
+            const int dummyHotelId = 1;
 
             _subject.GetRequiredStepInputsForHotelId(dummyHotelId);
 
@@ -35,7 +35,7 @@ namespace HotelReservationTests
         [Test]
         public void ShouldCreateStepForProvidedHotelId()
         {
-            var dummyHotelId = 1;
+            const int dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput>();
 
             A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1) }));
@@ -48,7 +48,7 @@ namespace HotelReservationTests
         [Test]
         public void ShouldCreateRealStepsForProvidedHotelId()
         {
-            var dummyHotelId = 1;
+            const int dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput>();
 
             A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).
@@ -63,7 +63,7 @@ namespace HotelReservationTests
         [Test]
         public void ShouldRetrieveRequiredStepInputs()
         {
-            var dummyHotelId = 1;
+            const int dummyHotelId = 1;
             var stepDouble = A.Fake<IReservationStep>();
 
             A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1) }));
