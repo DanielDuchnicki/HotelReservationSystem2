@@ -35,33 +35,6 @@ namespace HotelReservationTests
             A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(dummyHotelId)).MustHaveHappened();
         }
 
-        [Test]
-        public void ShouldCreateStepForProvidedHotelId()
-        {
-            const int dummyHotelId = 1;
-            var stepInputsDouble = new List<StepInput>();
-
-            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1)}));
-
-            _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
-
-            A.CallTo(() => _stepFactoryDouble.CreateInstance((ReservationStepType)(-1))).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldCreateRealStepsForProvidedHotelId()
-        {
-            const int dummyHotelId = 1;
-            var stepInputsDouble = new List<StepInput>();
-
-            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).
-                Returns((new List<ReservationStepType> { ReservationStepType.PaymentProcess, ReservationStepType.ReservationProcess }));
-
-            _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
-
-            A.CallTo(() => _stepFactoryDouble.CreateInstance(ReservationStepType.PaymentProcess)).MustHaveHappened();
-            A.CallTo(() => _stepFactoryDouble.CreateInstance(ReservationStepType.ReservationProcess)).MustHaveHappened();
-        }
 
         [Test]
         public void ShouldExecuteStepsForProvidedHotelId()

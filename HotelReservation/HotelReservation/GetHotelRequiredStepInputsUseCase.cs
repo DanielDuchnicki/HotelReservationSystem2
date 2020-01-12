@@ -20,23 +20,13 @@ namespace HotelReservation
         public ReadOnlyCollection<StepInput> GetRequiredStepInputsForHotelId(int hotelId)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
-            var reservationSteps = CreateStepsInstances(reservationStepTypes);
+            var reservationSteps = new StepsInstancesCreator(_stepFactory).Execute(reservationStepTypes);
             return GetRequiredStepsInputs(reservationSteps);
         }
 
         private List<ReservationStepType> GetHotelReservationSteps(int hotelId)
         {
             return _hotelSystem.GetHotelReservationSteps(hotelId);
-        }
-
-        private List<IReservationStep> CreateStepsInstances(List<ReservationStepType> reservationStepTypes)
-        {
-            var reservationSteps = new List<IReservationStep>();
-            foreach (var reservationStepType in reservationStepTypes)
-            {
-                reservationSteps.Add(_stepFactory.CreateInstance(reservationStepType));
-            }
-            return reservationSteps;
         }
 
         private ReadOnlyCollection<StepInput> GetRequiredStepsInputs(List<IReservationStep> reservationSteps)
