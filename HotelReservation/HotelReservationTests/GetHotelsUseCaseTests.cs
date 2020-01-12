@@ -22,14 +22,6 @@ namespace HotelReservationTests
         }
 
         [Test]
-        public void ShouldRetrieveAvailableHotels()
-        {
-            _subject.GetHotels();
-
-            A.CallTo(() => _hotelSystemDouble.GetHotels()).MustHaveHappened();
-        }
-
-        [Test]
         public void ShouldReturnCurrentHotelsInHotelSystem()
         {
             var dummyHotels = new ReadOnlyCollection<Hotel>(new List<Hotel>());
