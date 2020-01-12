@@ -1,6 +1,6 @@
 ﻿using System;
 using HotelReservation.ReservationSteps;
-using HotelReservation.ReservationSteps.Hotel;
+using HotelReservation.ReservationSteps.Reservation;
 using HotelReservation.ReservationSteps.Mail;
 using HotelReservation.ReservationSteps.Payment;
 using FluentAssertions;
@@ -9,9 +9,9 @@ using NUnit.Framework;
 namespace HotelReservationTests.ReservationSteps
 {
     [TestFixture]
-    class StepFactoryTests
+    public class StepFactoryTests
     {
-        StepFactory _subject;
+        private StepFactory _subject;
 
         [SetUp]
         public void BeforeTest()

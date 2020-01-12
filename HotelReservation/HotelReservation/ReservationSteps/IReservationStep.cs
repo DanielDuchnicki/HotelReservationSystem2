@@ -1,7 +1,10 @@
-﻿namespace HotelReservation.ReservationSteps
+﻿using System.Collections.Generic;
+
+namespace HotelReservation.ReservationSteps
 {
-    public interface IReservationStep
+    internal interface IReservationStep
     {
-        void Execute();
+        void Execute(List<StepInput> stepInputs);
+        List<StepInput> GetRequiredStepInputs();
     }
 }

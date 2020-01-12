@@ -46,17 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsolePrinter.cs" />
+    <Compile Include="GetHotelRequiredStepInputsUseCase.cs" />
+    <Compile Include="GetHotelsUseCase.cs" />
     <Compile Include="Hotels\Hotel.cs" />
     <Compile Include="Hotels\HotelSystem.cs" />
+    <Compile Include="StepsInstancesCreator.cs" />
     <Compile Include="Hotels\SystemInit.cs" />
+    <Compile Include="ReserveHotelUsecase.cs" />
     <Compile Include="ReservationSteps\IReservationStep.cs" />
+    <Compile Include="ReservationSteps\InputType.cs" />
+    <Compile Include="ReservationSteps\StepInput.cs" />
     <Compile Include="ReservationSteps\Payment\PaymentProcess.cs" />
     <Compile Include="ReservationSteps\Mail\SendingMailProcess.cs" />
-    <Compile Include="ReservationSteps\Hotel\ReservationStartProcess.cs" />
+    <Compile Include="ReservationSteps\Reservation\ReservationStartProcess.cs" />
     <Compile Include="ReservationSteps\ReservationStepType.cs" />
     <Compile Include="ReservationSteps\StepFactory.cs" />
     <Compile Include="ReservationSteps\StepsExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UseCaseFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

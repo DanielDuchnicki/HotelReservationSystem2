@@ -1,12 +1,23 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HotelReservation.ReservationSteps.Payment
 {
-    public class PaymentProcess : IReservationStep
+    internal class PaymentProcess : IReservationStep
     {
-        public void Execute()
+        private ConsolePrinter _consolePrinter;
+        private List<InputType> _requiredInputTypes = new List<InputType>();
+
+        public PaymentProcess(ConsolePrinter consolePrinter)
         {
-            Console.WriteLine("----==== PAYMENT PROCESS ====----");
+            _consolePrinter = consolePrinter;
+        }
+
+        public List<StepInput> GetRequiredStepInputs() => _requiredInputTypes.Select(type => new StepInput(type)).ToList();
+
+        public virtual void Execute(List<StepInput> stepInputs)
+        {
+            _consolePrinter.Write("----==== PAYMENT PROCESS ====----");
         }
     }
 }

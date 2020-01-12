@@ -3,7 +3,7 @@ using HotelReservation.ReservationSteps;
 
 namespace HotelReservation.Hotels
 {
-    public class SystemInit
+    internal class SystemInit
     {
         public void AddHotels(HotelSystem hotelSystem)
         {
@@ -18,8 +18,14 @@ namespace HotelReservation.Hotels
                 ReservationStepType.ReservationProcess,
                 ReservationStepType.SendingMailProcess
             };
+            var thirdHotelReservationSteps = new List<ReservationStepType>()
+            {
+                ReservationStepType.PaymentProcess,
+                ReservationStepType.SendingMailProcess
+            };
             hotelSystem.AddNewHotel(firstHotelReservationSteps);
             hotelSystem.AddNewHotel(secondHotelReservationSteps);
+            hotelSystem.AddNewHotel(thirdHotelReservationSteps);
         }
     }
 }

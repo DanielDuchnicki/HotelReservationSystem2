@@ -2,23 +2,22 @@
 using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
 using HotelReservation.ReservationSteps;
+using System.Collections.Generic;
+using HotelReservation;
 
 namespace ConsoleUserInterface
 {
     public class SystemMain
     {
-        public static void DisplayMenu()
+        private static void DisplayMenu()
         {
-            Console.WriteLine();
-            Console.WriteLine("----==== RESERVATION SYSTEM ====----");
-            Console.WriteLine("1 - Start new reservation");
-            Console.WriteLine();
-            Console.WriteLine("0 - EXIT");
-            Console.WriteLine();
+            Console.WriteLine("\n----==== RESERVATION SYSTEM ====----");
+            Console.WriteLine("1 - Start new reservation\n");
+            Console.WriteLine("0 - EXIT\n");
             Console.WriteLine("Choose, what you want to do:");
         }
 
-        public static void DisplayHotels(ReadOnlyCollection<Hotel> hotels)
+        private static void DisplayHotels(ReadOnlyCollection<Hotel> hotels)
         {
             if (hotels.Count == 0)
                 Console.WriteLine("There are no hotels added to the reservation system.");
@@ -32,17 +31,27 @@ namespace ConsoleUserInterface
             }
             Console.WriteLine();
         }
-        public static int SelectHotel()
+        private static int SelectHotel()
         {
             Console.WriteLine("Please check list of hotels and choose one for you!");
-            Console.WriteLine("Please provide hotel ID: ");
-            var selectedHotelId = Console.ReadLine();
+            Console.WriteLine("Please provide hotel ID:\n");
             var parsedHotelId = 0;
-            Console.WriteLine();
-            return !int.TryParse(selectedHotelId, out parsedHotelId) ? 0 : parsedHotelId;
+            return !int.TryParse(Console.ReadLine(), out parsedHotelId) ? 0 : parsedHotelId;
         }
 
-        public static int Menu(HotelSystem hotelSystem, StepsExecutor stepsExecutor)
+        private static List<StepInput> GatherStepInputsValues(ReadOnlyCollection<StepInput> stepInputs)
+        {
+            var stepInputsValues = new List<StepInput>();
+            foreach (var stepInput in stepInputs)
+            {
+                Console.WriteLine("Please provide your " + stepInput.Type + ": ");
+                stepInput.Value = Console.ReadLine();
+                stepInputsValues.Add(stepInput);
+            }
+            return stepInputsValues;
+        }
+
+        private static int Menu(UseCaseFactory useCaseFactory)
         {
             DisplayMenu();
             var choice = Console.ReadLine();
@@ -53,13 +62,13 @@ namespace ConsoleUserInterface
                     break;
                 case "1":
                     Console.Clear();
-                    var hotels = hotelSystem.GetHotels();
-                    DisplayHotels(hotels);
+                    DisplayHotels(useCaseFactory.CreateGetHotelsUseCase().GetHotels());
                     var hotelId = SelectHotel();
                     Console.Clear();
                     try
                     {
-                        stepsExecutor.ExecuteSteps(hotelSystem.GetHotelReservationSteps(hotelId));
+                        useCaseFactory.CreateReserveHotelUsecase().ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
+                            .CreateGetHotelRequiredStepInputsUseCase().GetRequiredStepInputsForHotelId(hotelId)));
                     }
                     catch (Exception ex)
                     {
@@ -76,15 +85,11 @@ namespace ConsoleUserInterface
 
         public static void Main()
         {
-            var hotelSystem = new HotelSystem();
-            new SystemInit().AddHotels(hotelSystem);
-            var stepsExecutor = new StepsExecutor(new StepFactory());
-
             Console.WriteLine("Welcome to reservation system. Choose option from below.");
-            int choice;
+            var choice = -1;
             do
             {
-                choice = Menu(hotelSystem, stepsExecutor);
+                choice = Menu(new UseCaseFactory());
             } while (choice != 0);
         }
     }
