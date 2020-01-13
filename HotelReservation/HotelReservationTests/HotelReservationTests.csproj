@@ -74,6 +74,7 @@
     <Compile Include="ReservationSteps\Mail\SendingMailProcessTests.cs" />
     <Compile Include="ReservationSteps\Reservation\ReservationStartProcessTests.cs" />
     <Compile Include="ReservationSteps\StepFactoryTests.cs" />
+    <Compile Include="ReservationSteps\StepOutputTests.cs" />
     <Compile Include="ReservationSteps\StepsExecutorTests.cs" />
     <Compile Include="ReserveHotelUsecaseTests.cs" />
     <Compile Include="StepsInstancesCreatorTests.cs" />
