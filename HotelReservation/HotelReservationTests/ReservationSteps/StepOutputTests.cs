@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using HotelReservation.ReservationSteps;
+using NUnit.Framework;
 
 
 namespace HotelReservationTests.ReservationSteps
@@ -6,11 +8,21 @@ namespace HotelReservationTests.ReservationSteps
     [TestFixture]
     public class StepOutputTests
     {
-        [SetUp]
-        public void BeforeTest()
+        [Test]
+        public void ShouldCreateNewStepOutputWithProvidedResult()
         {
-
+            var stepOutput = new StepOutput(true, "");
+            stepOutput.Result.Should().BeTrue();
         }
 
+        [Test]
+        public void ShouldCreateNewStepOutputWithProvidedMessage()
+        {
+            const string message = "Test message";
+
+            var stepOutput = new StepOutput(false, message);
+
+            stepOutput.Message.Should().BeEquivalentTo(message);
+        }
     }
 }
