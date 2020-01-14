@@ -4,7 +4,7 @@ namespace HotelReservation.ReservationSteps
 {
     internal interface IReservationStep
     {
-        void Execute(List<StepInput> stepInputs);
+        StepOutput Execute(List<StepInput> stepInputs);
         List<StepInput> GetRequiredStepInputs();
     }
 }

@@ -38,7 +38,7 @@ namespace HotelReservationTests.ReservationSteps
         public void ShouldExecuteRealStep()
         {
             var reservationStartProcessStepDouble = A.Fake<ReservationStartProcess>();
-            A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).DoesNothing();
+            A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).Returns(null);
 
             _subject.ExecuteSteps(new List<IReservationStep> { reservationStartProcessStepDouble }, _stepInputList);
 

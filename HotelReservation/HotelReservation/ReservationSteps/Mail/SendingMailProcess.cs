@@ -16,7 +16,7 @@ namespace HotelReservation.ReservationSteps.Mail
 
         public List<StepInput> GetRequiredStepInputs() => _requiredInputTypes.Select(type => new StepInput(type)).ToList();
 
-        public virtual void Execute(List<StepInput> stepInputs)
+        public virtual StepOutput Execute(List<StepInput> stepInputs)
         {
             string nameInput;
             string mailInput;
@@ -33,6 +33,12 @@ namespace HotelReservation.ReservationSteps.Mail
             _consolePrinter.Write("----==== SENDING MAIL PROCESS ====----");
             _consolePrinter.Write(nameInput);
             _consolePrinter.Write(mailInput);
+
+            //temporary solution
+            if (mailInput == null || mailInput == "")
+                return new StepOutput(false, "Your provided incorrect mail");
+            else
+                return new StepOutput(true, "Your mail: " + mailInput + ". Step finished with success!");
         }
     }
 }

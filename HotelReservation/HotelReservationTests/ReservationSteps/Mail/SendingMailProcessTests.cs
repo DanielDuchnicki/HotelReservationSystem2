@@ -73,5 +73,51 @@ namespace HotelReservationTests.ReservationSteps.Mail
             Action act = () => _subject.Execute(new List<StepInput> { incorrectStepInput });
             act.Should().Throw<NullReferenceException>().WithMessage("StepInput hasn't been correctly set!");
         }
+
+        [Test]
+        public void ShouldReturnStepOutputWithTrueResultForCorrectStepInput()
+        {
+            const string mailValue = "Test mail value";
+            _mail.Value = mailValue;
+
+            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+
+            stepOutput.Result.Should().BeTrue();
+        }
+
+        [Test]
+        public void ShouldReturnStepOutputWithCertainMessageForCorrectStepInput()
+        {
+            const string mailValue = "Test mail value";
+            _mail.Value = mailValue;
+            const string message = "Your mail: " + mailValue + ". Step finished with success!";
+
+            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+
+            stepOutput.Message.Should().Be(message);
+        }
+
+        [Test]
+        public void ShouldReturnStepOutputWithFalseResultForIncorrectStepInput()
+        {
+            const string mailValue = "";
+            _mail.Value = mailValue;
+
+            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+
+            stepOutput.Result.Should().BeFalse();
+        }
+
+        [Test]
+        public void ShouldReturnStepOutputWithCertainMessageForIncorrectStepInput()
+        {
+            const string mailValue = "";
+            _mail.Value = mailValue;
+            const string message = "Your provided incorrect mail";
+
+            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+
+            stepOutput.Message.Should().Be(message);
+        }
     }
 }

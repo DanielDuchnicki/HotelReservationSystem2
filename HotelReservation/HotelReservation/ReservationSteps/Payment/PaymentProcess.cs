@@ -15,9 +15,12 @@ namespace HotelReservation.ReservationSteps.Payment
 
         public List<StepInput> GetRequiredStepInputs() => _requiredInputTypes.Select(type => new StepInput(type)).ToList();
 
-        public virtual void Execute(List<StepInput> stepInputs)
+        public virtual StepOutput Execute(List<StepInput> stepInputs)
         {
             _consolePrinter.Write("----==== PAYMENT PROCESS ====----");
+
+            //temporary solution
+            return new StepOutput(true, "Payment step finished with success");
         }
     }
 }
