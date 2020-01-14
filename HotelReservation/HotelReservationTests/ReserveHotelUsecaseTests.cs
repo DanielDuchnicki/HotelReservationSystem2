@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using FakeItEasy;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using FluentAssertions;
 using HotelReservation;
 using HotelReservation.ReservationSteps;
 
@@ -41,15 +43,14 @@ namespace HotelReservationTests
         {
             const int dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput> { A.Fake<StepInput>() };
-            var stepDouble = A.Fake<IReservationStep>();
+            var stepsOutputsDouble = new List<StepOutput> { A.Fake<StepOutput>() };
 
-            A.CallTo(() => _hotelSystemDouble.GetHotelReservationSteps(A<int>._)).Returns((new List<ReservationStepType> { (ReservationStepType)(-1) }));
-            A.CallTo(() => _stepFactoryDouble.CreateInstance(A<ReservationStepType>._)).Returns(stepDouble);
+            A.CallTo(() => _stepExecutorDouble.ExecuteSteps(A<List<IReservationStep>>._, A<List<StepInput>>._))
+                .Returns(stepsOutputsDouble);
 
-            _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
+            var stepOutputs = _subject.ReserveHotel(dummyHotelId, stepInputsDouble);
 
-            A.CallTo(() => _stepExecutorDouble.ExecuteSteps(
-                A<List<IReservationStep>>.That.Matches(steps => steps.Contains(stepDouble)), stepInputsDouble)).MustHaveHappened();
+            stepOutputs.Should().BeEquivalentTo(new ReadOnlyCollection<StepOutput>(stepsOutputsDouble));
         }
     }
 }

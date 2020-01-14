@@ -1,9 +1,9 @@
 ﻿namespace HotelReservation.ReservationSteps
 {
-    class StepOutput
+    public class StepOutput
     {
-        public bool Result { get; private set; }
-        public string Message { get; private set; } = null;
+        public bool Result { get; }
+        public string Message { get; }
 
         internal StepOutput(bool result, string message)
         {

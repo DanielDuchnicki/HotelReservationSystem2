@@ -1,14 +1,15 @@
 ﻿using HotelReservation.ReservationSteps;
 using HotelReservation.Hotels;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace HotelReservation
 {
     public class ReserveHotelUsecase
     {
-        private HotelSystem _hotelSystem;
-        private StepFactory _stepFactory;
-        private StepsExecutor _stepExecutor;
+        private readonly HotelSystem _hotelSystem;
+        private readonly StepFactory _stepFactory;
+        private readonly StepsExecutor _stepExecutor;
 
         internal ReserveHotelUsecase(HotelSystem hotelSystem, StepFactory stepFactory, StepsExecutor stepExecutor)
         {
@@ -17,11 +18,11 @@ namespace HotelReservation
             _stepExecutor = stepExecutor;
         }
 
-        public void ReserveHotel(int hotelId, List<StepInput> stepsInputs)
+        public ReadOnlyCollection<StepOutput> ReserveHotel(int hotelId, List<StepInput> stepsInputs)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
             var reservationSteps = new StepsInstancesCreator(_stepFactory).Execute(reservationStepTypes);
-            ExecuteSteps(reservationSteps, stepsInputs);
+            return ExecuteSteps(reservationSteps, stepsInputs);
         }
 
         private List<ReservationStepType> GetHotelReservationSteps(int hotelId)
@@ -29,9 +30,9 @@ namespace HotelReservation
             return _hotelSystem.GetHotelReservationSteps(hotelId);
         }
 
-        private void ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
+        private ReadOnlyCollection<StepOutput> ExecuteSteps(List<IReservationStep> reservationSteps, List<StepInput> stepsInputs)
         {
-            _stepExecutor.ExecuteSteps(reservationSteps, stepsInputs);
+            return new ReadOnlyCollection<StepOutput>(_stepExecutor.ExecuteSteps(reservationSteps, stepsInputs));
         }
     }
 }

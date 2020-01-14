@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using HotelReservation.Hotels;
 using HotelReservation.ReservationSteps;
 using System.Collections.Generic;
+using System.Linq;
 using HotelReservation;
 
 namespace ConsoleUserInterface
@@ -67,8 +68,11 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        useCaseFactory.CreateReserveHotelUsecase().ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
+                        var stepOutputs =  useCaseFactory.CreateReserveHotelUsecase().ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
                             .CreateGetHotelRequiredStepInputsUseCase().GetRequiredStepInputsForHotelId(hotelId)));
+                        Console.WriteLine(stepOutputs.All(stepOutput => stepOutput.Result == true)
+                            ? "You have reserved hotel successfully. Congratulations!\n"
+                            : "Something went wrong, please try again!\n");
                     }
                     catch (Exception ex)
                     {
