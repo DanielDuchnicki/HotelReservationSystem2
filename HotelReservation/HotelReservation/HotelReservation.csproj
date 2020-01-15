@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsolePrinter.cs" />
     <Compile Include="GetHotelRequiredStepInputsUseCase.cs" />
     <Compile Include="GetHotelsUseCase.cs" />
     <Compile Include="Hotels\Hotel.cs" />

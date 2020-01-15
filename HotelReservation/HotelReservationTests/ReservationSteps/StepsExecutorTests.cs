@@ -4,7 +4,6 @@ using FluentAssertions;
 using HotelReservation.ReservationSteps;
 using NUnit.Framework;
 using HotelReservation.ReservationSteps.Reservation;
-using HotelReservation;
 using HotelReservation.ReservationSteps.Payment;
 using HotelReservation.ReservationSteps.Mail;
 
@@ -15,14 +14,12 @@ namespace HotelReservationTests.ReservationSteps
     {
         private StepsExecutor _subject;
         private List<StepInput> _stepInputList;
-        private ConsolePrinter _consolePrinterDouble;
 
         [SetUp]
         public void BeforeTest()
         {
             _subject = new StepsExecutor();
             _stepInputList = new List<StepInput>();
-            _consolePrinterDouble = A.Fake<ConsolePrinter>();
         }
 
         [Test]

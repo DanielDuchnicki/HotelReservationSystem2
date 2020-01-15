@@ -6,13 +6,7 @@ namespace HotelReservation.ReservationSteps.Mail
 {
     internal class SendingMailProcess : IReservationStep
     {
-        private ConsolePrinter _consolePrinter;
-        private List<InputType> _requiredInputTypes = new List<InputType> { InputType.Name, InputType.EmailAddress };
-
-        public SendingMailProcess(ConsolePrinter consolePrinter)
-        {
-            _consolePrinter = consolePrinter;
-        }
+        private readonly List<InputType> _requiredInputTypes = new List<InputType> { InputType.Name, InputType.EmailAddress };
 
         public List<StepInput> GetRequiredStepInputs() => _requiredInputTypes.Select(type => new StepInput(type)).ToList();
 
@@ -30,15 +24,10 @@ namespace HotelReservation.ReservationSteps.Mail
                 throw new NullReferenceException("StepInput hasn't been correctly set!");
                 //tu logowanie stacktrace
             }
-            _consolePrinter.Write("----==== SENDING MAIL PROCESS ====----");
-            _consolePrinter.Write(nameInput);
-            _consolePrinter.Write(mailInput);
-
             //temporary solution
-            if (mailInput == null || mailInput == "")
-                return new StepOutput(false, "Your provided incorrect mail");
-            else
-                return new StepOutput(true, "Your mail: " + mailInput + ". Step finished with success!");
+            return string.IsNullOrEmpty(mailInput) ? 
+                new StepOutput(false, "Your provided incorrect mail") : 
+                new StepOutput(true, "Your name: " + nameInput + "\nYour mail: " + mailInput + "\nSending mail step finished with success!");
         }
     }
 }

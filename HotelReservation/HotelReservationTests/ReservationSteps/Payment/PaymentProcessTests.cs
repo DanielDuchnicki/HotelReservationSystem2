@@ -1,6 +1,4 @@
-﻿using FakeItEasy;
-using FluentAssertions;
-using HotelReservation;
+﻿using FluentAssertions;
 using HotelReservation.ReservationSteps;
 using HotelReservation.ReservationSteps.Payment;
 using NUnit.Framework;
@@ -12,13 +10,11 @@ namespace HotelReservationTests.ReservationSteps.Payment
     public class PaymentProcessTests
     {
         private PaymentProcess _subject;
-        private ConsolePrinter _consolePrinterDouble;
 
         [SetUp]
         public void BeforeTest()
         {
-            _consolePrinterDouble = A.Fake<ConsolePrinter>();
-            _subject = new PaymentProcess(_consolePrinterDouble);
+            _subject = new PaymentProcess();
         }
 
         [Test]
@@ -27,14 +23,6 @@ namespace HotelReservationTests.ReservationSteps.Payment
             var stepInputs = new List<StepInput>();
 
             _subject.GetRequiredStepInputs().Should().BeEquivalentTo(stepInputs);
-        }
-
-        [Test]
-        public void ExecuteShouldCallConsolePrinterWithStepName()
-        {
-            _subject.Execute(new List<StepInput>());
-
-            A.CallTo(() => _consolePrinterDouble.Write("----==== PAYMENT PROCESS ====----")).MustHaveHappened();
         }
 
         [Test]

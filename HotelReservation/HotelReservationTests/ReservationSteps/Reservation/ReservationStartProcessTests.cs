@@ -1,6 +1,4 @@
 ﻿using HotelReservation.ReservationSteps.Reservation;
-using HotelReservation;
-using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using HotelReservation.ReservationSteps;
@@ -13,14 +11,12 @@ namespace HotelReservationTests.ReservationSteps.Reservation
     public class ReservationStartProcessTests
     {
         private ReservationStartProcess _subject;
-        private ConsolePrinter _consolePrinterDouble;
         private StepInput _name;
 
         [SetUp]
         public void BeforeTest()
         {
-            _consolePrinterDouble = A.Fake<ConsolePrinter>();
-            _subject = new ReservationStartProcess(_consolePrinterDouble);
+            _subject = new ReservationStartProcess();
             _name = new StepInput(InputType.Name);
         }
 
@@ -31,27 +27,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
 
             _subject.GetRequiredStepInputs().Should().BeEquivalentTo(stepInputs);
         }
-
-        [Test]
-        public void ExecuteShouldCallConsolePrinterWithStepName()
-        {
-            _subject.Execute(new List<StepInput> { _name });
-
-            A.CallTo(() => _consolePrinterDouble.Write("----==== RESERVATION PROCESS ====----")).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldCallConsolePrinterWithProvidedArgument()
-        {
-            const string nameValue = "Test value";
-
-            _name.Value = nameValue;
-
-            _subject.Execute(new List<StepInput> { _name });
-
-            A.CallTo(() => _consolePrinterDouble.Write(nameValue)).MustHaveHappened();
-        }
-
+        
         [Test]
         public void ShouldThrowExceptionWhenNameInputIsMissing()
         {
@@ -78,7 +54,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         {
             const string nameValue = "Test Name";
             _name.Value = nameValue;
-            const string message = "Your name: " + nameValue + ". Step finished with success!";
+            const string message = "Your name: " + nameValue + "\nReservation start step finished with success!";
 
             var stepOutput = _subject.Execute(new List<StepInput> { _name });
 

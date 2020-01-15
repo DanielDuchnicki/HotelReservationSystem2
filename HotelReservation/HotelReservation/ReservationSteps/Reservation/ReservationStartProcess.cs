@@ -6,13 +6,7 @@ namespace HotelReservation.ReservationSteps.Reservation
 {
     internal class ReservationStartProcess : IReservationStep
     {
-        private ConsolePrinter _consolePrinter;
-        private List<InputType> _requiredInputTypes = new List<InputType> { InputType.Name };
-
-        public ReservationStartProcess(ConsolePrinter consolePrinter)
-        {
-            _consolePrinter = consolePrinter;
-        }
+        private readonly List<InputType> _requiredInputTypes = new List<InputType> { InputType.Name };
 
         public List<StepInput> GetRequiredStepInputs() => _requiredInputTypes.Select(type => new StepInput(type)).ToList();
 
@@ -29,14 +23,10 @@ namespace HotelReservation.ReservationSteps.Reservation
                 //tu logowanie stacktrace
             }
 
-            _consolePrinter.Write("----==== RESERVATION PROCESS ====----");
-            _consolePrinter.Write(nameInput);
-
             //temporary solution
-            if (nameInput == null || nameInput == "")
-                return new StepOutput(false, "Your provided incorrect name");
-            else
-                return new StepOutput(true, "Your name: " + nameInput + ". Step finished with success!");
+            return string.IsNullOrEmpty(nameInput) ? 
+                new StepOutput(false, "Your provided incorrect name") : 
+                new StepOutput(true, "Your name: " + nameInput + "\nReservation start step finished with success!");
 
         }
     }

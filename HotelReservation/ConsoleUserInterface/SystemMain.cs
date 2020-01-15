@@ -70,9 +70,11 @@ namespace ConsoleUserInterface
                     {
                         var stepOutputs =  useCaseFactory.CreateReserveHotelUsecase().ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
                             .CreateGetHotelRequiredStepInputsUseCase().GetRequiredStepInputsForHotelId(hotelId)));
-                        Console.WriteLine(stepOutputs.All(stepOutput => stepOutput.Result == true)
-                            ? "You have reserved hotel successfully. Congratulations!\n"
-                            : "Something went wrong, please try again!\n");
+                        foreach (var stepOutput in stepOutputs)
+                            Console.WriteLine(stepOutput.Message);
+                        Console.WriteLine(stepOutputs.All(stepOutput => stepOutput.Result)
+                            ? "\nYou have reserved hotel successfully. Congratulations!\n"
+                            : "\nSomething went wrong, please try again!\n");
                     }
                     catch (Exception ex)
                     {
