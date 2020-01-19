@@ -11,21 +11,18 @@ namespace HotelReservationTests.ReservationSteps.Mail
     public class SendingMailProcessTests
     {
         private SendingMailProcess _subject;
-        private StepInput _name;
-        private StepInput _mail;
 
         [SetUp]
         public void BeforeTest()
         {
             _subject = new SendingMailProcess();
-            _name = new StepInput(InputType.Name);
-            _mail = new StepInput(InputType.EmailAddress);
         }
 
         [Test]
         public void ShouldProvideSendingMailProcessInputs()
         {
-            var stepInputs = new List<StepInput> { _name, _mail };
+            var stepInputs = new List<StepInput> { new StepInput(InputType.Name),
+                new StepInput(InputType.EmailAddress) };
 
             _subject.GetRequiredStepInputs().Should().BeEquivalentTo(stepInputs);
         }
@@ -44,9 +41,10 @@ namespace HotelReservationTests.ReservationSteps.Mail
         public void ShouldReturnStepOutputWithSuccessfulResultForCorrectStepInput()
         {
             const string mailValue = "Test mail value";
-            _mail.Value = mailValue;
+            var name = new StepInput(InputType.Name);
+            var mail = new StepInput(InputType.EmailAddress) {Value = mailValue};
 
-            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+            var stepOutput = _subject.Execute(new List<StepInput> { name, mail });
 
             stepOutput.IsSuccessful.Should().BeTrue();
         }
@@ -56,11 +54,11 @@ namespace HotelReservationTests.ReservationSteps.Mail
         {
             const string nameValue = "Test name value";
             const string mailValue = "Test mail value";
-            _name.Value = nameValue;
-            _mail.Value = mailValue;
             const string message = "Your name: " + nameValue + "\nYour mail: " + mailValue + "\nSending mail step finished with success!";
+            var name = new StepInput(InputType.Name) {Value = nameValue};
+            var mail = new StepInput(InputType.EmailAddress) {Value = mailValue};
 
-            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+            var stepOutput = _subject.Execute(new List<StepInput> { name, mail });
 
             stepOutput.Message.Should().Be(message);
         }
@@ -69,9 +67,10 @@ namespace HotelReservationTests.ReservationSteps.Mail
         public void ShouldReturnStepOutputWithNotSuccessfulResultForEmptyStepInput()
         {
             const string mailValue = "";
-            _mail.Value = mailValue;
+            var name = new StepInput(InputType.Name);
+            var mail = new StepInput(InputType.EmailAddress) {Value = mailValue};
 
-            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+            var stepOutput = _subject.Execute(new List<StepInput> { name, mail });
 
             stepOutput.IsSuccessful.Should().BeFalse();
         }
@@ -80,10 +79,11 @@ namespace HotelReservationTests.ReservationSteps.Mail
         public void ShouldReturnStepOutputWithCertainMessageForEmptyStepInput()
         {
             const string mailValue = "";
-            _mail.Value = mailValue;
             const string message = "Your provided incorrect mail";
+            var name = new StepInput(InputType.Name);
+            var mail = new StepInput(InputType.EmailAddress) {Value = mailValue};
 
-            var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
+            var stepOutput = _subject.Execute(new List<StepInput> { name, mail });
 
             stepOutput.Message.Should().Be(message);
         }

@@ -11,19 +11,17 @@ namespace HotelReservationTests.ReservationSteps.Reservation
     public class ReservationStartProcessTests
     {
         private ReservationStartProcess _subject;
-        private StepInput _name;
 
         [SetUp]
         public void BeforeTest()
         {
             _subject = new ReservationStartProcess();
-            _name = new StepInput(InputType.Name);
         }
 
         [Test]
         public void ShouldProvideReservationStartProcessInputs()
         {
-            var stepInputs = new List<StepInput> { _name };
+            var stepInputs = new List<StepInput> { new StepInput(InputType.Name) };
 
             _subject.GetRequiredStepInputs().Should().BeEquivalentTo(stepInputs);
         }
@@ -42,9 +40,9 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         public void ShouldReturnStepOutputWithSuccessfulResultForCorrectStepInput()
         {
             const string nameValue = "Test Name";
-            _name.Value = nameValue;
+            var name = new StepInput(InputType.Name) {Value = nameValue};
 
-            var stepOutput = _subject.Execute(new List<StepInput> { _name });
+            var stepOutput = _subject.Execute(new List<StepInput> { name });
 
             stepOutput.IsSuccessful.Should().BeTrue();
         }
@@ -53,10 +51,10 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         public void ShouldReturnStepOutputWithCertainMessageForCorrectStepInput()
         {
             const string nameValue = "Test Name";
-            _name.Value = nameValue;
             const string message = "Your name: " + nameValue + "\nReservation start step finished with success!";
-
-            var stepOutput = _subject.Execute(new List<StepInput> { _name });
+            var name = new StepInput(InputType.Name) { Value = nameValue };
+            
+            var stepOutput = _subject.Execute(new List<StepInput> { name });
 
             stepOutput.Message.Should().Be(message);
         }
@@ -65,9 +63,9 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         public void ShouldReturnStepOutputWithNotSuccessfulResultForEmptyStepInput()
         {
             const string nameValue = "";
-            _name.Value = nameValue;
+            var name = new StepInput(InputType.Name) { Value = nameValue };
 
-            var stepOutput = _subject.Execute(new List<StepInput> { _name });
+            var stepOutput = _subject.Execute(new List<StepInput> { name });
 
             stepOutput.IsSuccessful.Should().BeFalse();
         }
@@ -76,10 +74,10 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         public void ShouldReturnStepOutputWithCertainMessageForEmptyStepInput()
         {
             const string nameValue = "";
-            _name.Value = nameValue;
             const string message = "Your provided incorrect name";
-
-            var stepOutput = _subject.Execute(new List<StepInput> { _name });
+            var name = new StepInput(InputType.Name) { Value = nameValue };
+            
+            var stepOutput = _subject.Execute(new List<StepInput> { name });
 
             stepOutput.Message.Should().Be(message);
         }
