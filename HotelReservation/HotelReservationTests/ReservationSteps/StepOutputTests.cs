@@ -12,7 +12,7 @@ namespace HotelReservationTests.ReservationSteps
         public void ShouldCreateNewStepOutputWithProvidedResult()
         {
             var stepOutput = new StepOutput(true, "");
-            stepOutput.Result.Should().BeTrue();
+            stepOutput.IsSuccessful.Should().BeTrue();
         }
 
         [Test]

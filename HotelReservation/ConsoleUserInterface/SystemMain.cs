@@ -72,7 +72,7 @@ namespace ConsoleUserInterface
                             .CreateGetHotelRequiredStepInputsUseCase().GetRequiredStepInputsForHotelId(hotelId)));
                         foreach (var stepOutput in stepOutputs)
                             Console.WriteLine(stepOutput.Message);
-                        Console.WriteLine(stepOutputs.All(stepOutput => stepOutput.Result)
+                        Console.WriteLine(stepOutputs.All(stepOutput => stepOutput.IsSuccessful)
                             ? "\nYou have reserved hotel successfully. Congratulations!\n"
                             : "\nSomething went wrong, please try again!\n");
                     }

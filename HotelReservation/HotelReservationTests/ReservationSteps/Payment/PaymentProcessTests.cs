@@ -26,10 +26,10 @@ namespace HotelReservationTests.ReservationSteps.Payment
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithTrueResult()
+        public void ShouldReturnStepOutputWithSuccesfulResult()
         {
             var stepOutput = _subject.Execute(new List<StepInput>());
-            stepOutput.Result.Should().BeTrue();
+            stepOutput.IsSuccessful.Should().BeTrue();
         }
 
         [Test]

@@ -39,14 +39,14 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithTrueResultForCorrectStepInput()
+        public void ShouldReturnStepOutputWithSuccessfulResultForCorrectStepInput()
         {
             const string nameValue = "Test Name";
             _name.Value = nameValue;
 
             var stepOutput = _subject.Execute(new List<StepInput> { _name });
 
-            stepOutput.Result.Should().BeTrue();
+            stepOutput.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -62,14 +62,14 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithFalseResultForIncorrectStepInput()
+        public void ShouldReturnStepOutputWithNotSuccessfulResultForIncorrectStepInput()
         {
             const string nameValue = "";
             _name.Value = nameValue;
 
             var stepOutput = _subject.Execute(new List<StepInput> { _name });
 
-            stepOutput.Result.Should().BeFalse();
+            stepOutput.IsSuccessful.Should().BeFalse();
         }
 
         [Test]

@@ -41,14 +41,14 @@ namespace HotelReservationTests.ReservationSteps.Mail
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithTrueResultForCorrectStepInput()
+        public void ShouldReturnStepOutputWithSuccessfulResultForCorrectStepInput()
         {
             const string mailValue = "Test mail value";
             _mail.Value = mailValue;
 
             var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
 
-            stepOutput.Result.Should().BeTrue();
+            stepOutput.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
@@ -66,14 +66,14 @@ namespace HotelReservationTests.ReservationSteps.Mail
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithFalseResultForIncorrectStepInput()
+        public void ShouldReturnStepOutputWithNotSuccessfulResultForIncorrectStepInput()
         {
             const string mailValue = "";
             _mail.Value = mailValue;
 
             var stepOutput = _subject.Execute(new List<StepInput> { _name, _mail });
 
-            stepOutput.Result.Should().BeFalse();
+            stepOutput.IsSuccessful.Should().BeFalse();
         }
 
         [Test]

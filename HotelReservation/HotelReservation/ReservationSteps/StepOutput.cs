@@ -2,12 +2,12 @@
 {
     public class StepOutput
     {
-        public bool Result { get; }
+        public bool IsSuccessful { get; }
         public string Message { get; }
 
-        internal StepOutput(bool result, string message)
+        internal StepOutput(bool isSuccessful, string message)
         {
-            Result = result;
+            IsSuccessful = isSuccessful;
             Message = message;
         }
     }
