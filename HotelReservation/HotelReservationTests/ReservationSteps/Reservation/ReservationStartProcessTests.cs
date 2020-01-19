@@ -62,7 +62,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithNotSuccessfulResultForIncorrectStepInput()
+        public void ShouldReturnStepOutputWithNotSuccessfulResultForEmptyStepInput()
         {
             const string nameValue = "";
             _name.Value = nameValue;
@@ -73,7 +73,7 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithCertainMessageForIncorrectStepInput()
+        public void ShouldReturnStepOutputWithCertainMessageForEmptyStepInput()
         {
             const string nameValue = "";
             _name.Value = nameValue;

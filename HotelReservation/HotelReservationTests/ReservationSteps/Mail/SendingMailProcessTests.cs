@@ -66,7 +66,7 @@ namespace HotelReservationTests.ReservationSteps.Mail
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithNotSuccessfulResultForIncorrectStepInput()
+        public void ShouldReturnStepOutputWithNotSuccessfulResultForEmptyStepInput()
         {
             const string mailValue = "";
             _mail.Value = mailValue;
@@ -77,7 +77,7 @@ namespace HotelReservationTests.ReservationSteps.Mail
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithCertainMessageForIncorrectStepInput()
+        public void ShouldReturnStepOutputWithCertainMessageForEmptyStepInput()
         {
             const string mailValue = "";
             _mail.Value = mailValue;
