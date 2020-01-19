@@ -14,6 +14,7 @@ namespace HotelReservation.ReservationSteps.Mail
         {
             string nameInput;
             string mailInput;
+
             try
             {
                 nameInput = stepInputs.Find(stepInputData => stepInputData.Type == InputType.Name).Value;
@@ -24,10 +25,16 @@ namespace HotelReservation.ReservationSteps.Mail
                 throw new NullReferenceException("StepInput hasn't been correctly set!");
                 //tu logowanie stacktrace
             }
-            //temporary solution
-            return string.IsNullOrEmpty(mailInput) ? 
-                new StepOutput(false, "Your provided incorrect mail") : 
-                new StepOutput(true, "Your name: " + nameInput + "\nYour mail: " + mailInput + "\nSending mail step finished with success!");
+
+            var incorrectStepInputTypes = new List<InputType>();
+
+            if (string.IsNullOrEmpty(nameInput))
+                incorrectStepInputTypes.Add(InputType.Name);
+            if (string.IsNullOrEmpty(mailInput))
+                incorrectStepInputTypes.Add(InputType.EmailAddress);
+
+            return incorrectStepInputTypes.Count().Equals(0) ? 
+                new StepOutput(true, incorrectStepInputTypes) : new StepOutput(false, incorrectStepInputTypes);
         }
     }
 }

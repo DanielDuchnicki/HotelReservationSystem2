@@ -23,10 +23,13 @@ namespace HotelReservation.ReservationSteps.Reservation
                 //tu logowanie stacktrace
             }
 
-            //temporary solution
-            return string.IsNullOrEmpty(nameInput) ? 
-                new StepOutput(false, "Your provided incorrect name") : 
-                new StepOutput(true, "Your name: " + nameInput + "\nReservation start step finished with success!");
+            var incorrectStepInputTypes = new List<InputType>();
+
+            if (string.IsNullOrEmpty(nameInput))
+                incorrectStepInputTypes.Add(InputType.Name);
+
+            return incorrectStepInputTypes.Count().Equals(0) ?
+                new StepOutput(true, incorrectStepInputTypes) : new StepOutput(false, incorrectStepInputTypes);
 
         }
     }

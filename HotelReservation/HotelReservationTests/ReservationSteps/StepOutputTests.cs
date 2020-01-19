@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using FluentAssertions;
 using HotelReservation.ReservationSteps;
 using NUnit.Framework;
 
@@ -11,18 +13,18 @@ namespace HotelReservationTests.ReservationSteps
         [Test]
         public void ShouldCreateNewStepOutputWithProvidedResult()
         {
-            var stepOutput = new StepOutput(true, "");
+            var stepOutput = new StepOutput(true, new List<InputType>());
             stepOutput.IsSuccessful.Should().BeTrue();
         }
 
         [Test]
-        public void ShouldCreateNewStepOutputWithProvidedMessage()
+        public void ShouldCreateNewStepOutputWithProvidedIncorrectInputTypes()
         {
-            const string message = "Test message";
+            var incorrectInputTypes = new List<InputType> {(InputType)(-1)};
 
-            var stepOutput = new StepOutput(false, message);
+            var stepOutput = new StepOutput(false, incorrectInputTypes);
 
-            stepOutput.Message.Should().BeEquivalentTo(message);
+            stepOutput.IncorrectInputsTypes.Should().BeEquivalentTo(incorrectInputTypes);
         }
     }
 }

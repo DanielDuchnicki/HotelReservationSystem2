@@ -68,11 +68,11 @@ namespace ConsoleUserInterface
                     Console.Clear();
                     try
                     {
-                        var stepOutputs =  useCaseFactory.CreateReserveHotelUsecase().ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
+                        var reservationResult = useCaseFactory.CreateReserveHotelUsecase().ReserveHotel(hotelId, GatherStepInputsValues(useCaseFactory
                             .CreateGetHotelRequiredStepInputsUseCase().GetRequiredStepInputsForHotelId(hotelId)));
-                        foreach (var stepOutput in stepOutputs)
-                            Console.WriteLine(stepOutput.Message);
-                        Console.WriteLine(stepOutputs.All(stepOutput => stepOutput.IsSuccessful)
+                        foreach (var incorrectInputType in reservationResult.IncorrectInputTypes)
+                            Console.WriteLine("You provided incorrect " + incorrectInputType);
+                        Console.WriteLine(reservationResult.IsSuccessful
                             ? "\nYou have reserved hotel successfully. Congratulations!\n"
                             : "\nSomething went wrong, please try again!\n");
                     }

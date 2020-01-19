@@ -2,6 +2,7 @@
 using HotelReservation.Hotels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace HotelReservation
 {
@@ -18,11 +19,22 @@ namespace HotelReservation
             _stepExecutor = stepExecutor;
         }
 
-        public ReadOnlyCollection<StepOutput> ReserveHotel(int hotelId, List<StepInput> stepsInputs)
+        public ReservationResult ReserveHotel(int hotelId, List<StepInput> stepsInputs)
         {
             var reservationStepTypes = GetHotelReservationSteps(hotelId);
             var reservationSteps = new StepsInstancesCreator(_stepFactory).Execute(reservationStepTypes);
-            return ExecuteSteps(reservationSteps, stepsInputs);
+            var stepOutputs = ExecuteSteps(reservationSteps, stepsInputs);
+
+            var incorrectInputTypes = new List<InputType>();
+            foreach (var stepOutput in stepOutputs)
+            {
+                if (!stepOutput.IsSuccessful)
+                    incorrectInputTypes.AddRange(stepOutput.IncorrectInputsTypes.Except(incorrectInputTypes));
+            }
+
+            return incorrectInputTypes.Count().Equals(0) ?
+                new ReservationResult(true, new ReadOnlyCollection<InputType>(incorrectInputTypes)) : 
+                new ReservationResult(false, new ReadOnlyCollection<InputType>(incorrectInputTypes));
         }
 
         private List<ReservationStepType> GetHotelReservationSteps(int hotelId)

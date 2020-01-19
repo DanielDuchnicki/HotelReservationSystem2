@@ -1,14 +1,17 @@
-﻿namespace HotelReservation.ReservationSteps
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace HotelReservation.ReservationSteps
 {
-    public class StepOutput
+    internal class StepOutput
     {
         public bool IsSuccessful { get; }
-        public string Message { get; }
+        public List<InputType> IncorrectInputsTypes { get; }
 
-        internal StepOutput(bool isSuccessful, string message)
+        internal StepOutput(bool isSuccessful, List<InputType> incorrectInputsTypes)
         {
             IsSuccessful = isSuccessful;
-            Message = message;
+            IncorrectInputsTypes = incorrectInputsTypes;
         }
     }
 }

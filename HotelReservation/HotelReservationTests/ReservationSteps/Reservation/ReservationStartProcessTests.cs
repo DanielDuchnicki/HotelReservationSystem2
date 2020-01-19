@@ -48,15 +48,14 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithCertainMessageForCorrectStepInput()
+        public void ShouldReturnStepOutputWithEmptyIncorrectStepsInputsForCorrectStepInput()
         {
-            const string nameValue = "Test Name";
-            const string message = "Your name: " + nameValue + "\nReservation start step finished with success!";
+            const string nameValue = "Test name value";
             var name = new StepInput(InputType.Name) { Value = nameValue };
-            
+
             var stepOutput = _subject.Execute(new List<StepInput> { name });
 
-            stepOutput.Message.Should().Be(message);
+            stepOutput.IncorrectInputsTypes.Should().BeEmpty();
         }
 
         [Test]
@@ -71,15 +70,15 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithCertainMessageForEmptyStepInput()
+        public void ShouldReturnStepOutputWithExpectedIncorrectInputTypesForEmptyStepInput()
         {
             const string nameValue = "";
-            const string message = "Your provided incorrect name";
             var name = new StepInput(InputType.Name) { Value = nameValue };
-            
+            var expectedIncorrectStepInputTypes = new List<InputType> { InputType.Name };
+
             var stepOutput = _subject.Execute(new List<StepInput> { name });
 
-            stepOutput.Message.Should().Be(message);
+            stepOutput.IncorrectInputsTypes.Should().BeEquivalentTo(expectedIncorrectStepInputTypes);
         }
     }
 }

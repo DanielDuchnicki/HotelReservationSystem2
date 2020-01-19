@@ -33,13 +33,11 @@ namespace HotelReservationTests.ReservationSteps.Payment
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithCertainMessage()
+        public void ShouldReturnStepOutputWithEmptyIncorrectInputTypes()
         {
-            const string message = "Payment step finished with success";
-
             var stepOutput = _subject.Execute(new List<StepInput>());
 
-            stepOutput.Message.Should().Be(message);
+            stepOutput.IncorrectInputsTypes.Should().BeEmpty();
         }
     }
 }

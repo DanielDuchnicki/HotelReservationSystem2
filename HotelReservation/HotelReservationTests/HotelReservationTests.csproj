@@ -71,6 +71,7 @@
     <Compile Include="Hotels\HotelSystemTests.cs" />
     <Compile Include="Hotels\SystemInitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReservationResultTests.cs" />
     <Compile Include="ReservationSteps\Mail\SendingMailProcessTests.cs" />
     <Compile Include="ReservationSteps\Payment\PaymentProcessTests.cs" />
     <Compile Include="ReservationSteps\Reservation\ReservationStartProcessTests.cs" />

@@ -11,8 +11,8 @@ namespace HotelReservation.ReservationSteps.Payment
 
         public virtual StepOutput Execute(List<StepInput> stepInputs)
         {
-            //temporary solution
-            return new StepOutput(true, "Payment step finished with success");
+
+            return new StepOutput(true, new List<InputType>());
         }
     }
 }
