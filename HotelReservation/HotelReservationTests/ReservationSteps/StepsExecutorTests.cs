@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using FakeItEasy;
+using FluentAssertions;
 using HotelReservation.ReservationSteps;
 using NUnit.Framework;
-using HotelReservation.ReservationSteps.Reservation;
-using HotelReservation;
-using HotelReservation.ReservationSteps.Payment;
-using HotelReservation.ReservationSteps.Mail;
+
 
 namespace HotelReservationTests.ReservationSteps
 {
@@ -13,62 +12,71 @@ namespace HotelReservationTests.ReservationSteps
     public class StepsExecutorTests
     {
         private StepsExecutor _subject;
-        private List<StepInput> _stepInputList;
-        private ConsolePrinter _consolePrinterDouble;
+        private List<StepInput> _stepsInputs;
 
         [SetUp]
         public void BeforeTest()
         {
             _subject = new StepsExecutor();
-            _stepInputList = new List<StepInput>();
-            _consolePrinterDouble = A.Fake<ConsolePrinter>();
+            _stepsInputs = new List<StepInput>();
         }
 
         [Test]
-        public void ShouldExecuteCreatedStep()
+        public void ShouldExecuteCreatedStepWithStepsInputs()
         {
             var stepDouble = A.Fake<IReservationStep>();
 
-            _subject.ExecuteSteps(new List<IReservationStep> { stepDouble }, _stepInputList);
+            _subject.ExecuteSteps(new List<IReservationStep> { stepDouble }, _stepsInputs);
 
-            A.CallTo(() => stepDouble.Execute(_stepInputList)).MustHaveHappened();
+            A.CallTo(() => stepDouble.Execute(_stepsInputs)).MustHaveHappened();
         }
 
         [Test]
-        public void ShouldExecuteRealStep()
+        public void ShouldExecuteThreeCreatedStepsWithStepsInputs()
         {
-            var reservationStartProcessStepDouble = A.Fake<ReservationStartProcess>();
-            A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).DoesNothing();
+            var stepDouble = A.Fake<IReservationStep>();
 
-            _subject.ExecuteSteps(new List<IReservationStep> { reservationStartProcessStepDouble }, _stepInputList);
+            var providedListOfSteps = new List<IReservationStep> { stepDouble, stepDouble, stepDouble };
 
-            A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).MustHaveHappened();
+            _subject.ExecuteSteps(providedListOfSteps, _stepsInputs);
+
+            A.CallTo(() => stepDouble.Execute(_stepsInputs)).MustHaveHappened(3, Times.Exactly);
         }
 
         [Test]
-        public void ShouldExecuteThreeCreatedSteps()
+        public void ShouldExecuteStepAndReturnStepOutputs()
         {
-            var StepDouble = A.Fake<IReservationStep>();
+            var stepDouble = A.Fake<IReservationStep>();
+            var stepOutputDouble = A.Fake<StepOutput>();
+            var expectedStepOutputs = new List<StepOutput> { stepOutputDouble };
 
-            var providedListOfSteps = new List<IReservationStep> { StepDouble, StepDouble, StepDouble};
+            A.CallTo(() => stepDouble.Execute(_stepsInputs)).Returns(stepOutputDouble);
 
-            _subject.ExecuteSteps(providedListOfSteps, _stepInputList);
+            var stepOutputs = _subject.ExecuteSteps(new List<IReservationStep> { stepDouble }, _stepsInputs);
 
-            A.CallTo(() => StepDouble.Execute(_stepInputList)).MustHaveHappened(3, Times.Exactly);
+            stepOutputs.Should().BeEquivalentTo(expectedStepOutputs);
         }
 
         [Test]
-        public void ShouldExecuteThreeRealSteps()
+        public void ShouldExecuteThreeStepsAndReturnStepOutputs()
         {
-            var reservationStartProcessStepDouble = A.Fake<ReservationStartProcess>();
-            var PaymentProcessStepDouble = A.Fake<PaymentProcess>();
-            var SendingMailProcessStepDouble = A.Fake<SendingMailProcess>();
+            var stepDouble = A.Fake<IReservationStep>();
+            var stepDouble2 = A.Fake<IReservationStep>();
+            var stepDouble3 = A.Fake<IReservationStep>();
 
-            _subject.ExecuteSteps(new List<IReservationStep> { reservationStartProcessStepDouble, PaymentProcessStepDouble, SendingMailProcessStepDouble }, _stepInputList);
+            var stepOutputDouble = new StepOutput(null);
+            var stepOutputDouble2 = new StepOutput(new List<InputType> { (InputType)(-1) });
+            var stepOutputDouble3 = new StepOutput(new List<InputType> { (InputType)(-1), (InputType)(-1) });
+            var expectedStepOutputs = new List<StepOutput> { stepOutputDouble, stepOutputDouble2, stepOutputDouble3 };
 
-            A.CallTo(() => reservationStartProcessStepDouble.Execute(_stepInputList)).MustHaveHappened();
-            A.CallTo(() => PaymentProcessStepDouble.Execute(_stepInputList)).MustHaveHappened();
-            A.CallTo(() => SendingMailProcessStepDouble.Execute(_stepInputList)).MustHaveHappened();
+            A.CallTo(() => stepDouble.Execute(_stepsInputs)).Returns(stepOutputDouble);
+            A.CallTo(() => stepDouble2.Execute(_stepsInputs)).Returns(stepOutputDouble2);
+            A.CallTo(() => stepDouble3.Execute(_stepsInputs)).Returns(stepOutputDouble3);
+
+            var stepOutputs = _subject.ExecuteSteps(
+                new List<IReservationStep> { stepDouble, stepDouble2, stepDouble3 }, _stepsInputs);
+
+            stepOutputs.Should().BeEquivalentTo(expectedStepOutputs);
         }
     }
 }

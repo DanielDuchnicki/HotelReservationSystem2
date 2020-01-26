@@ -1,6 +1,4 @@
 ﻿using HotelReservation.ReservationSteps.Reservation;
-using HotelReservation;
-using FakeItEasy;
 using FluentAssertions;
 using NUnit.Framework;
 using HotelReservation.ReservationSteps;
@@ -13,47 +11,21 @@ namespace HotelReservationTests.ReservationSteps.Reservation
     public class ReservationStartProcessTests
     {
         private ReservationStartProcess _subject;
-        private ConsolePrinter _consolePrinterDouble;
-        private StepInput _name;
-        private StepInput _email;
 
         [SetUp]
         public void BeforeTest()
         {
-            _consolePrinterDouble = A.Fake<ConsolePrinter>();
-            _subject = new ReservationStartProcess(_consolePrinterDouble);
-            _name = new StepInput(InputType.Name);
-            _email = new StepInput(InputType.EmailAddress);
+            _subject = new ReservationStartProcess();
         }
 
         [Test]
         public void ShouldProvideReservationStartProcessInputs()
         {
-            var stepInputs = new List<StepInput> { _name, _email };
+            var stepInputs = new List<StepInput> { new StepInput(InputType.Name) };
 
             _subject.GetRequiredStepInputs().Should().BeEquivalentTo(stepInputs);
         }
-
-        [Test]
-        public void ExecuteShouldCallConsolePrinterWithStepName()
-        {
-            _subject.Execute(new List<StepInput> { _name });
-
-            A.CallTo(() => _consolePrinterDouble.Write("----==== RESERVATION PROCESS ====----")).MustHaveHappened();
-        }
-
-        [Test]
-        public void ShouldCallConsolePrinterWithProvidedArgument()
-        {
-            const string nameValue = "Test value";
-
-            _name.Value = nameValue;
-
-            _subject.Execute(new List<StepInput> { _name });
-
-            A.CallTo(() => _consolePrinterDouble.Write(nameValue)).MustHaveHappened();
-        }
-
+        
         [Test]
         public void ShouldThrowExceptionWhenNameInputIsMissing()
         {
@@ -62,6 +34,29 @@ namespace HotelReservationTests.ReservationSteps.Reservation
 
             Action act = () => _subject.Execute(new List<StepInput> { incorrectStepInput });
             act.Should().Throw<NullReferenceException>().WithMessage("StepInput hasn't been correctly set!");
+        }
+
+        [Test]
+        public void ShouldReturnStepOutputWithEmptyIncorrectStepsInputsForCorrectStepInput()
+        {
+            const string nameValue = "Test name value";
+            var name = new StepInput(InputType.Name) { Value = nameValue };
+
+            var stepOutput = _subject.Execute(new List<StepInput> { name });
+
+            stepOutput.IncorrectInputsTypes.Should().BeEmpty();
+        }
+
+        [Test]
+        public void ShouldReturnStepOutputWithExpectedIncorrectInputTypesForEmptyStepInput()
+        {
+            const string nameValue = "";
+            var name = new StepInput(InputType.Name) { Value = nameValue };
+            var expectedIncorrectStepInputTypes = new List<InputType> { InputType.Name };
+
+            var stepOutput = _subject.Execute(new List<StepInput> { name });
+
+            stepOutput.IncorrectInputsTypes.Should().BeEquivalentTo(expectedIncorrectStepInputTypes);
         }
     }
 }

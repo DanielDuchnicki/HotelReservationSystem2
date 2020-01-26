@@ -46,11 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsolePrinter.cs" />
     <Compile Include="GetHotelRequiredStepInputsUseCase.cs" />
     <Compile Include="GetHotelsUseCase.cs" />
     <Compile Include="Hotels\Hotel.cs" />
     <Compile Include="Hotels\HotelSystem.cs" />
+    <Compile Include="ReservationResult.cs" />
+    <Compile Include="ReservationSteps\StepOutput.cs" />
     <Compile Include="StepsInstancesCreator.cs" />
     <Compile Include="Hotels\SystemInit.cs" />
     <Compile Include="ReserveHotelUsecase.cs" />

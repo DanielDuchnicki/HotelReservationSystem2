@@ -37,9 +37,8 @@ namespace HotelReservationTests
         {
             var dummyStepTypes = new List<ReservationStepType> { ReservationStepType.PaymentProcess, ReservationStepType.ReservationProcess };
 
-            var consolePrinterDouble = A.Fake<ConsolePrinter>();
-            var firstStepDouble = new PaymentProcess(consolePrinterDouble);
-            var secondStepDouble = new ReservationStartProcess(consolePrinterDouble);
+            var firstStepDouble = new PaymentProcess();
+            var secondStepDouble = new ReservationStartProcess();
 
             A.CallTo(() => _stepFactoryDouble.CreateInstance(ReservationStepType.PaymentProcess)).Returns(firstStepDouble);
             A.CallTo(() => _stepFactoryDouble.CreateInstance(ReservationStepType.ReservationProcess)).Returns(secondStepDouble);
