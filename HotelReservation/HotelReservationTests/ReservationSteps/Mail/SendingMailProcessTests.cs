@@ -38,19 +38,6 @@ namespace HotelReservationTests.ReservationSteps.Mail
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithSuccessfulResultForCorrectStepInput()
-        {
-            const string nameValue = "Test name value";
-            const string mailValue = "Test mail value";
-            var name = new StepInput(InputType.Name) {Value = nameValue };
-            var mail = new StepInput(InputType.EmailAddress) {Value = mailValue};
-
-            var stepOutput = _subject.Execute(new List<StepInput> { name, mail });
-
-            stepOutput.IsSuccessful.Should().BeTrue();
-        }
-
-        [Test]
         public void ShouldReturnStepOutputWithEmptyIncorrectStepsInputsForCorrectStepInput()
         {
             const string nameValue = "Test name value";
@@ -61,18 +48,6 @@ namespace HotelReservationTests.ReservationSteps.Mail
             var stepOutput = _subject.Execute(new List<StepInput> { name, mail });
 
             stepOutput.IncorrectInputsTypes.Should().BeEmpty();
-        }
-
-        [Test]
-        public void ShouldReturnStepOutputWithNotSuccessfulResultForEmptyStepInput()
-        {
-            const string mailValue = "";
-            var name = new StepInput(InputType.Name);
-            var mail = new StepInput(InputType.EmailAddress) {Value = mailValue};
-
-            var stepOutput = _subject.Execute(new List<StepInput> { name, mail });
-
-            stepOutput.IsSuccessful.Should().BeFalse();
         }
 
         [Test]

@@ -33,8 +33,7 @@ namespace HotelReservation.ReservationSteps.Mail
             if (string.IsNullOrEmpty(mailInput))
                 incorrectStepInputTypes.Add(InputType.EmailAddress);
 
-            return incorrectStepInputTypes.Count().Equals(0) ? 
-                new StepOutput(true, incorrectStepInputTypes) : new StepOutput(false, incorrectStepInputTypes);
+            return new StepOutput(incorrectStepInputTypes);
         }
     }
 }

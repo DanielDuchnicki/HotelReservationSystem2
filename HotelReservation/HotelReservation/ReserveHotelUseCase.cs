@@ -27,14 +27,11 @@ namespace HotelReservation
 
             var incorrectInputTypes = new List<InputType>();
             foreach (var stepOutput in stepOutputs)
-            {
-                if (!stepOutput.IsSuccessful)
-                    incorrectInputTypes.AddRange(stepOutput.IncorrectInputsTypes.Except(incorrectInputTypes));
-            }
+                incorrectInputTypes.AddRange(stepOutput.IncorrectInputsTypes.Except(incorrectInputTypes));
 
-            return incorrectInputTypes.Count().Equals(0) ?
-                new ReservationResult(true, new ReadOnlyCollection<InputType>(incorrectInputTypes)) : 
-                new ReservationResult(false, new ReadOnlyCollection<InputType>(incorrectInputTypes));
+            return incorrectInputTypes.Any() ?
+                new ReservationResult(false, new ReadOnlyCollection<InputType>(incorrectInputTypes)) : 
+                new ReservationResult(true, new ReadOnlyCollection<InputType>(incorrectInputTypes));
         }
 
         private List<ReservationStepType> GetHotelReservationSteps(int hotelId)

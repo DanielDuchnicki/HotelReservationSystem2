@@ -11,18 +11,11 @@ namespace HotelReservationTests.ReservationSteps
     public class StepOutputTests
     {
         [Test]
-        public void ShouldCreateNewStepOutputWithProvidedResult()
-        {
-            var stepOutput = new StepOutput(true, new List<InputType>());
-            stepOutput.IsSuccessful.Should().BeTrue();
-        }
-
-        [Test]
         public void ShouldCreateNewStepOutputWithProvidedIncorrectInputTypes()
         {
             var incorrectInputTypes = new List<InputType> {(InputType)(-1)};
 
-            var stepOutput = new StepOutput(false, incorrectInputTypes);
+            var stepOutput = new StepOutput(incorrectInputTypes);
 
             stepOutput.IncorrectInputsTypes.Should().BeEquivalentTo(incorrectInputTypes);
         }

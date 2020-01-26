@@ -59,7 +59,7 @@ namespace HotelReservationTests
         {
             const int dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput> {A.Fake<StepInput>()};
-            var stepOutputDouble = new StepOutput(false, new List<InputType> { (InputType)(-1) });
+            var stepOutputDouble = new StepOutput(new List<InputType> { (InputType)(-1) });
 
             A.CallTo(() => _stepExecutorDouble.ExecuteSteps(A<List<IReservationStep>>._, A<List<StepInput>>._)).Returns(new List<StepOutput> { stepOutputDouble });
 
@@ -73,7 +73,7 @@ namespace HotelReservationTests
         {
             const int dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput> { A.Fake<StepInput>() };
-            var stepOutputDouble = new StepOutput(true, new List<InputType> { });
+            var stepOutputDouble = new StepOutput(new List<InputType>());
 
             A.CallTo(() => _stepExecutorDouble.ExecuteSteps(A<List<IReservationStep>>._, A<List<StepInput>>._)).Returns(new List<StepOutput> { stepOutputDouble });
 
@@ -88,7 +88,7 @@ namespace HotelReservationTests
             const int dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput> { A.Fake<StepInput>() };
             var incorrectInputTypesDouble = new List<InputType> {(InputType) (-1)};
-            var stepOutputDouble = new StepOutput(false, incorrectInputTypesDouble);
+            var stepOutputDouble = new StepOutput(incorrectInputTypesDouble);
 
             A.CallTo(() => _stepExecutorDouble.ExecuteSteps(A<List<IReservationStep>>._, A<List<StepInput>>._)).Returns(new List<StepOutput> { stepOutputDouble });
 
@@ -102,7 +102,7 @@ namespace HotelReservationTests
         {
             const int dummyHotelId = 1;
             var stepInputsDouble = new List<StepInput> { A.Fake<StepInput>() };
-            var stepOutputDouble = new StepOutput(true, new List<InputType>( ));
+            var stepOutputDouble = new StepOutput(new List<InputType>( ));
 
             A.CallTo(() => _stepExecutorDouble.ExecuteSteps(A<List<IReservationStep>>._, A<List<StepInput>>._)).Returns(new List<StepOutput> { stepOutputDouble });
 

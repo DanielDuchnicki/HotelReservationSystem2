@@ -37,17 +37,6 @@ namespace HotelReservationTests.ReservationSteps.Reservation
         }
 
         [Test]
-        public void ShouldReturnStepOutputWithSuccessfulResultForCorrectStepInput()
-        {
-            const string nameValue = "Test Name";
-            var name = new StepInput(InputType.Name) {Value = nameValue};
-
-            var stepOutput = _subject.Execute(new List<StepInput> { name });
-
-            stepOutput.IsSuccessful.Should().BeTrue();
-        }
-
-        [Test]
         public void ShouldReturnStepOutputWithEmptyIncorrectStepsInputsForCorrectStepInput()
         {
             const string nameValue = "Test name value";
@@ -56,17 +45,6 @@ namespace HotelReservationTests.ReservationSteps.Reservation
             var stepOutput = _subject.Execute(new List<StepInput> { name });
 
             stepOutput.IncorrectInputsTypes.Should().BeEmpty();
-        }
-
-        [Test]
-        public void ShouldReturnStepOutputWithNotSuccessfulResultForEmptyStepInput()
-        {
-            const string nameValue = "";
-            var name = new StepInput(InputType.Name) { Value = nameValue };
-
-            var stepOutput = _subject.Execute(new List<StepInput> { name });
-
-            stepOutput.IsSuccessful.Should().BeFalse();
         }
 
         [Test]

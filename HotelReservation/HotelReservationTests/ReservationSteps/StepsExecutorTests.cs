@@ -64,9 +64,9 @@ namespace HotelReservationTests.ReservationSteps
             var stepDouble2 = A.Fake<IReservationStep>();
             var stepDouble3 = A.Fake<IReservationStep>();
 
-            var stepOutputDouble = new StepOutput(true, null);
-            var stepOutputDouble2 = new StepOutput(false, new List<InputType> { (InputType)(-1) });
-            var stepOutputDouble3 = new StepOutput(false, new List<InputType> { (InputType)(-1), (InputType)(-1) });
+            var stepOutputDouble = new StepOutput(null);
+            var stepOutputDouble2 = new StepOutput(new List<InputType> { (InputType)(-1) });
+            var stepOutputDouble3 = new StepOutput(new List<InputType> { (InputType)(-1), (InputType)(-1) });
             var expectedStepOutputs = new List<StepOutput> { stepOutputDouble, stepOutputDouble2, stepOutputDouble3 };
 
             A.CallTo(() => stepDouble.Execute(_stepsInputs)).Returns(stepOutputDouble);

@@ -28,8 +28,7 @@ namespace HotelReservation.ReservationSteps.Reservation
             if (string.IsNullOrEmpty(nameInput))
                 incorrectStepInputTypes.Add(InputType.Name);
 
-            return incorrectStepInputTypes.Count().Equals(0) ?
-                new StepOutput(true, incorrectStepInputTypes) : new StepOutput(false, incorrectStepInputTypes);
+            return new StepOutput(incorrectStepInputTypes);
 
         }
     }

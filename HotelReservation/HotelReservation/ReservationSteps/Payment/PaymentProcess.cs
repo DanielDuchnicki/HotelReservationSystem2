@@ -12,7 +12,7 @@ namespace HotelReservation.ReservationSteps.Payment
         public virtual StepOutput Execute(List<StepInput> stepInputs)
         {
 
-            return new StepOutput(true, new List<InputType>());
+            return new StepOutput(new List<InputType>());
         }
     }
 }
